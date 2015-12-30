@@ -96,12 +96,12 @@ class OMVModuleTransmissionBt extends OMVModuleServiceAbstract implements
 
         $systemCtl = new OMVSystemCtl($this->serviceName);
 
-        return array(
+        return [
             "name" => $this->getName(),
             "title" => gettext("BitTorrent"),
             "enabled" => boolval($object["enable"]),
             "running" => $systemCtl->isActive()
-        );
+        ];
     }
 
     /**
@@ -111,10 +111,10 @@ class OMVModuleTransmissionBt extends OMVModuleServiceAbstract implements
      */
     public function getZeroconfConfig()
     {
-        return array(
+        return [
             "id" => "transmissionbt",
             "title" => gettext("BitTorrent"),
-        );
+        ];
     }
 
     /**
@@ -169,19 +169,19 @@ class OMVModuleTransmissionBt extends OMVModuleServiceAbstract implements
         $dispatcher->addListener(
             OMV_NOTIFY_MODIFY,
             $this->getEventMessagePath(),
-            array($this, "setDirty")
+            [$this, "setDirty"]
         );
 
         $dispatcher->addListener(
             OMV_NOTIFY_MODIFY,
             $this->getEventMessagePath(),
-            array($moduleMgr->getModule("zeroconf"), "setDirty")
+            [$moduleMgr->getModule("zeroconf"), "setDirty"]
         );
 
         $dispatcher->addListener(
             OMV_NOTIFY_MODIFY,
             $this->getSharedFolderEventMessagePath(),
-            array($this, "setDirty")
+            [$this, "setDirty"]
         );
     }
 }

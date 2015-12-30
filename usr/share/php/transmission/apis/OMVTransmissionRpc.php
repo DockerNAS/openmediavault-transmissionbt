@@ -43,11 +43,11 @@ class OMVTransmissionRpc extends TransmissionRPC
         }
 
         if (!is_array($ids)) {
-            $ids = array($ids);
+            $ids = [$ids];
         }
 
         // Convert $ids to an array if only a single id was passed
-        $request = array("ids" => $ids);
+        $request = ["ids" => $ids];
         $this->request("queue-move-$action", $request);
     }
 }

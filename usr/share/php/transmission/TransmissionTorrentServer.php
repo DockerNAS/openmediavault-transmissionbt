@@ -38,8 +38,8 @@ class TransmissionTorrentServer implements ITorrentServer
     public function getTorrents()
     {
         $result = $this->rpc->get(
-            array(),
-            array(
+            [],
+            [
                 "id",
                 "name",
                 "status",
@@ -55,10 +55,10 @@ class TransmissionTorrentServer implements ITorrentServer
                 "rateUpload",
                 "uploadRatio",
                 "queuePosition"
-            )
+            ]
         );
 
-        $torrents = array();
+        $torrents = [];
 
         foreach ($result["arguments"]["torrents"] as $torrent) {
             $torrents[] = new TransmissionTorrent($torrent);
@@ -69,7 +69,7 @@ class TransmissionTorrentServer implements ITorrentServer
 
     public function add($location, $paused = false)
     {
-        $result = $this->rpc->add($location, "", array("paused" => $paused));
+        $result = $this->rpc->add($location, "", ["paused" => $paused]);
 
         if (isset($result["result"])) {
             if ($result["result"] == "success") {

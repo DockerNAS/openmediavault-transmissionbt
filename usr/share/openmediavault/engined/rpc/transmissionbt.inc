@@ -114,9 +114,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
         global $xmlConfig;
 
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Get configuration object
         $object = $xmlConfig->get($this->getXPath());
@@ -164,9 +164,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
         global $xmlConfig;
 
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Validate the parameters of the RPC service method.
         $this->validateMethodParams(
@@ -285,7 +285,7 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
         }
 
         // Prepare configuration data
-        $object = array(
+        $object = [
             "enable" => boolval($params["enable"]),
             "pexenabled" => boolval($params["pexenabled"]),
             "dhtenabled" => boolval($params["dhtenabled"]),
@@ -299,7 +299,7 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
             "blocklistsyncenabled" => boolval($params["blocklistsyncenabled"]),
             "blocklistsyncfrequency" => $params["blocklistsyncfrequency"],
             "blocklisturl" => $params["blocklisturl"],
-            "modules" => isset($oldObject["modules"]) ? $oldObject["modules"] : array(),
+            "modules" => isset($oldObject["modules"]) ? $oldObject["modules"] : [],
             "lazy-bitfield-enabled" => boolval($params["lazy-bitfield-enabled"]),
             "umask" => $params["umask"],
             "lpd-enabled" => boolval($params["lpd-enabled"]),
@@ -309,7 +309,7 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
             "cache-size-mb" => $params["cache-size-mb"],
             "script-torrent-done-enabled" => boolval($params["script-torrent-done-enabled"]),
             "script-torrent-done-filename" => $params["script-torrent-done-filename"],
-        );
+        ];
 
         // Set configuration object
         if ($xmlConfig->replace($this->getXPath(), $object) === false) {
@@ -335,9 +335,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
         global $xmlConfig;
 
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Get configuration object
         $object = $xmlConfig->get($this->getFilesAndLocationsXPath());
@@ -383,9 +383,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
         global $xmlConfig;
 
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Validate the parameters of the RPC service method.
         $this->validateMethodParams(
@@ -439,7 +439,7 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
         );
 
         // Prepare configuration data
-        $object = array(
+        $object = [
             // Locations
             "download.sharedfolderref" => $params["download.sharedfolderref"],
             "download-dir" => $params["download-dir"],
@@ -455,7 +455,7 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
             "rename-partial-files" => boolval($params["rename-partial-files"]),
             "start-added-torrents" => boolval($params["start-added-torrents"]),
             "trash-original-torrent-files" => boolval($params["trash-original-torrent-files"]),
-        );
+        ];
 
         // Set configuration object
         if ($xmlConfig->replace($this->getFilesAndLocationsXPath(), $object) === false) {
@@ -481,9 +481,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
         global $xmlConfig;
 
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Get configuration object
         $object = $xmlConfig->get($this->getBandwidthXPath());
@@ -522,9 +522,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
         global $xmlConfig;
 
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Validate the parameters of the RPC service method.
         $this->validateMethodParams(
@@ -564,7 +564,7 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
             }'
         );
 
-        $object = array(
+        $object = [
             // Speed
             "speed-limit-down" => $params["speed-limit-down"],
             "speed-limit-down-enabled" => boolval($params["speed-limit-down-enabled"]),
@@ -576,7 +576,7 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
             "alt-speed-enabled" => boolval($params["alt-speed-enabled"]),
             "alt-speed-up" => $params["alt-speed-up"],
             "alt-speed-down" => $params["alt-speed-down"],
-        );
+        ];
 
         // Set configuration object
         if ($xmlConfig->replace($this->getBandwidthXPath(), $object) === false) {
@@ -602,9 +602,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
         global $xmlConfig;
 
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Get configuration object
         $object = $xmlConfig->get($this->getQueuingXPath());
@@ -641,9 +641,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
         global $xmlConfig;
 
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Validate the parameters of the RPC service method.
         $this->validateMethodParams(
@@ -677,7 +677,7 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
         );
 
         // Prepare configuration data
-        $object = array(
+        $object = [
             // General
             "queue-stalled-enabled" => boolval($params["queue-stalled-enabled"]),
             "queue-stalled-minutes" => $params["queue-stalled-minutes"],
@@ -689,7 +689,7 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
             // Seed
             "seed-queue-enabled" => boolval($params["seed-queue-enabled"]),
             "seed-queue-size" => $params["seed-queue-size"],
-        );
+        ];
 
         // Set configuration object
         if ($xmlConfig->replace($this->getQueuingXPath(), $object) === false) {
@@ -715,9 +715,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
         global $xmlConfig;
 
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Get configuration object
         $object = $xmlConfig->get($this->getPeerXPath());
@@ -755,9 +755,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
         global $xmlConfig;
 
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Validate the parameters of the RPC service method.
         $this->validateMethodParams(
@@ -817,7 +817,7 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
         );
 
         // Prepare configuration data
-        $object = array(
+        $object = [
             // Bindings
             "bind-address-ipv4" => $params["bind-address-ipv4"],
             "bind-address-ipv6" => $params["bind-address-ipv6"],
@@ -833,7 +833,7 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
             "peer-port-random-low" => $params["peer-port-random-low"],
             "peer-port-random-on-start" => boolval($params["peer-port-random-on-start"]),
             "port-forwarding-enabled" => boolval($params["port-forwarding-enabled"]),
-        );
+        ];
 
         // Set configuration object
         if ($xmlConfig->replace($this->getPeerXPath(), $object) === false) {
@@ -863,9 +863,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
         global $xmlConfig;
 
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Get configuration object
         $object = $xmlConfig->get($this->getSchedulingXPath());
@@ -952,9 +952,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
         global $xmlConfig;
 
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Validate the parameters of the RPC service method.
         $this->validateMethodParams(
@@ -1055,7 +1055,7 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
         }
 
         // Prepare configuration data
-        $object = array(
+        $object = [
             "alt-speed-time-enabled" => boolval($params["alt-speed-time-enabled"]),
             "alt-speed-time-begin" => intval(($params["begin-hour"] * 60) + $params["begin-minute"]),
             "alt-speed-time-end" => intval(($params["end-hour"] * 60) + $params["end-minute"]),
@@ -1068,7 +1068,7 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
             // Ratio
             "ratio-limit" => $params["ratio-limit"],
             "ratio-limit-enabled" => boolval($params["ratio-limit-enabled"]),
-        );
+        ];
 
         // Set configuration object
         if ($xmlConfig->replace($this->getSchedulingXPath(), $object) === false) {
@@ -1087,9 +1087,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
     public function serverIsRunning($params, $context)
     {
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         $module = new OMVModuleTransmissionBt();
         $status = $module->getStatus();
@@ -1100,9 +1100,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
     public function getTorrentList($params, $context)
     {
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Validate the parameters of the RPC service method.
         $this->validateMethodParams(
@@ -1127,10 +1127,10 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
         );
 
         $server = $this->torrentServerFactory();
-        $torrents = array();
+        $torrents = [];
 
         foreach ($server->getTorrents() as $torrent) {
-            $torrents[] = array(
+            $torrents[] = [
                 "id" => $torrent->getId(),
                 "name" => $torrent->getName(),
                 "status" => $torrent->getStatus(),
@@ -1146,7 +1146,7 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
                 "date_done" => $torrent->getDateDone(),
                 "upload_ratio" => $torrent->getRatio(),
                 "queue_position" => $torrent->getQueuePosition()
-            );
+            ];
         }
 
         return $this->applyFilter(
@@ -1161,9 +1161,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
     public function addTorrent($params, $context)
     {
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Validate the parameters of the RPC service method.
         $this->validateMethodParams(
@@ -1192,9 +1192,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
     public function uploadTorrent($params, $context)
     {
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Validate the parameters of the RPC service method.
         $this->validateMethodParams(
@@ -1220,9 +1220,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
     public function deleteTorrent($params, $context)
     {
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Validate the parameters of the RPC service method.
         $this->validateMethodParams(
@@ -1252,9 +1252,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
     public function pauseTorrent($params, $context)
     {
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Validate the parameters of the RPC service method.
         $this->validateMethodParams(
@@ -1277,9 +1277,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
     public function resumeTorrent($params, $context)
     {
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Validate the parameters of the RPC service method.
         $this->validateMethodParams(
@@ -1302,9 +1302,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
     public function queueMoveTorrent($params, $context)
     {
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, array(
+        $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR
-        ));
+        ]);
 
         // Validate the parameters of the RPC service method.
         $this->validateMethodParams(
