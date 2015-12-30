@@ -8,6 +8,6 @@
     delaycompress
     sharedscripts
     postrotate
-        invoke-rc.d rsyslog restart > /dev/null
+        systemctl restart rsyslog > /dev/null
     endscript
 }

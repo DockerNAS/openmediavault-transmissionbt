@@ -5,7 +5,7 @@ set -e
 case "$1" in
     purge|remove|failed-upgrade|abort-install|abort-upgrade|disappear)
         # Stop service
-        invoke-rc.d --quiet transmission-daemon stop
+        systemctl stop transmission-daemon.service
     ;;
 
     upgrade)

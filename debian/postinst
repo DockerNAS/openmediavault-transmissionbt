@@ -11,12 +11,12 @@ case "$1" in
         # expected by OpenMediaVault.
         if [ -z "$2" ]; then
             echo "Updating init script links and actions."
-            invoke-rc.d --force transmission-daemon stop
-            update-rc.d transmission-daemon disable >/dev/null
+            systemctl stop transmission-daemon.service
+            systemctl disable transmission-daemon.service
 
             # Restart rsyslog to load the provided configuration. Only needs
             # to be done when the plugin is installed.
-            invoke-rc.d rsyslog restart
+            systemctl restart rsyslog.service
         fi
 
         # Update the configuration.

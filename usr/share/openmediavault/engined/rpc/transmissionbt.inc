@@ -19,11 +19,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+require_once "openmediavault/config.inc";
 require_once "openmediavault/error.inc";
 require_once "openmediavault/notify.inc";
-require_once "openmediavault/object.inc";
-require_once "openmediavault/rpc.inc";
-require_once "openmediavault/util.inc";
+require_once "openmediavault/rpcservice.inc";
 require_once "transmission/ITorrentServer.php";
 require_once "transmission/TransmissionTorrentServer.php";
 
@@ -38,7 +37,7 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
 
     private function getXPath()
     {
-        return "//services/transmissionbt";
+        return "/config/services/transmissionbt";
     }
 
     public function getFilesAndLocationsXPath()

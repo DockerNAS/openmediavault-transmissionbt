@@ -21,15 +21,17 @@
 
 require_once "openmediavault/config.inc";
 require_once "openmediavault/error.inc";
-require_once "openmediavault/initscript.inc";
 require_once "openmediavault/module.inc";
-require_once "openmediavault/util.inc";
+require_once "openmediavault/notify.inc";
+require_once "openmediavault/systemctl.inc";
 
 class OMVModuleTransmissionBt extends OMVModuleServiceAbstract implements
     OMVIModuleServiceStatus,
     OMVIModuleZeroconf,
     OMVINotifyListener
 {
+    private $serviceName = "transmission-daemon";
+
     private function getEventMessagePath()
     {
         return "org.openmediavault.services.transmissionbt";
@@ -68,47 +70,9 @@ class OMVModuleTransmissionBt extends OMVModuleServiceAbstract implements
             throw new OMVException(
                 OMVErrorMsg::E_EXEC_FAILED,
                 $cmd,
-                implode("\n", $output)
+                implode(PHP_EOL, $output)
             );
         }
-    }
-
-    /**
-     * Start the managed service.
-     *
-     * @return void
-     */
-    public function startService()
-    {
-        global $xmlConfig;
-
-        // Get the configuration object
-        $object = $xmlConfig->get($this->getXPath());
-
-        if (is_null($object)) {
-            throw new OMVException(
-                OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
-                $this->getXPath()
-            );
-        }
-
-        if (!boolval($object['enable'])) {
-            return;
-        }
-
-        $initd = new OMVSysVInitScript("transmission-daemon", true);
-        $initd->exec();
-    }
-
-    /**
-     * Stop the managed service.
-     *
-     * @return void
-     */
-    public function stopService()
-    {
-        $initd = new OMVSysVInitScript("transmission-daemon");
-        $initd->exec();
     }
 
     /**
@@ -130,15 +94,13 @@ class OMVModuleTransmissionBt extends OMVModuleServiceAbstract implements
             );
         }
 
-        // Check if process is running. Init script does not support 'status'.
-        $cmd = "ps --no-heading -C transmission-daemon";
-        $this->exec($cmd, $output);
+        $systemCtl = new OMVSystemCtl($this->serviceName);
 
         return array(
             "name" => $this->getName(),
             "title" => gettext("BitTorrent"),
-            "enabled" => boolval($object['enable']),
-            "running" => !empty($output[0])
+            "enabled" => boolval($object["enable"]),
+            "running" => $systemCtl->isActive()
         );
     }
 
@@ -153,6 +115,44 @@ class OMVModuleTransmissionBt extends OMVModuleServiceAbstract implements
             "id" => "transmissionbt",
             "title" => gettext("BitTorrent"),
         );
+    }
+
+    /**
+     * Start the managed service.
+     *
+     * @return void
+     */
+    public function startService()
+    {
+        global $xmlConfig;
+
+        // Get the configuration object
+        $object = $xmlConfig->get($this->getXPath());
+
+        if (is_null($object)) {
+            throw new OMVException(
+                OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
+                $this->getXPath()
+            );
+        }
+
+        if (!boolval($object["enable"])) {
+            return;
+        }
+
+        $systemCtl = new OMVSystemCtl($this->serviceName);
+        $systemCtl->enable(true);
+    }
+
+    /**
+     * Stop the managed service.
+     *
+     * @return void
+     */
+    public function stopService()
+    {
+        $systemCtl = new OMVSystemCtl($this->serviceName);
+        $systemCtl->disable(true);
     }
 
     /**
