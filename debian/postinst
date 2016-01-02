@@ -11,12 +11,17 @@ case "$1" in
         # expected by OpenMediaVault.
         if [ -z "$2" ]; then
             echo "Updating init script links and actions."
-            systemctl stop transmission-daemon.service
-            systemctl disable transmission-daemon.service
+            deb-systemd-helper disable transmission-daemon.service >/dev/null || true
+            deb-systemd-invoke stop transmission-daemon.service >/dev/null || true
 
-            # Restart rsyslog to load the provided configuration. Only needs
+            # Restart rsyslog to load the provided configuration if rsyslog is
+            # installed and enabled since we're not dependent on it. Only needs
             # to be done when the plugin is installed.
-            systemctl restart rsyslog.service
+            if deb-systemd-helper debian-installed rsyslog.service; then
+                if deb-systemd-helper is-enabled rsyslog.service; then
+                    deb-systemd-invoke restart rsyslog.service >/dev/null || true
+                fi
+            fi
         fi
 
         # Update the configuration.

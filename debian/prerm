@@ -4,8 +4,8 @@ set -e
 
 case "$1" in
     purge|remove|failed-upgrade|abort-install|abort-upgrade|disappear)
-        # Stop service
-        systemctl stop transmission-daemon.service
+        # Stop the service.
+        deb-systemd-invoke stop transmission-daemon.service >/dev/null || true
     ;;
 
     upgrade)
