@@ -44,6 +44,25 @@ Ext.define('OMV.module.admin.service.transmissionbt.Rpc', {
         }]
     }],
 
+    getButtonItems: function() {
+        var items = this.callParent(arguments);
+
+        items.push({
+            id: this.getId() + '-show',
+            xtype: 'button',
+            text: _('Show'),
+            icon: 'images/search.png',
+            iconCls: Ext.baseCSSPrefix + 'btn-icon-16x16',
+            scope: this,
+            handler: function() {
+                var port = this.findField('rpc-port').getValue();
+                window.open('http://' + location.hostname + ':' + port, '_blank');
+            }
+        });
+
+        return items;
+    },
+
     getFormItems: function() {
         return [{
             xtype: 'fieldset',
