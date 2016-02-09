@@ -19,7 +19,6 @@
 
 // require("js/omv/WorkspaceManager.js")
 // require("js/omv/workspace/form/Panel.js")
-// require("js/omv/form/plugin/LinkedFields.js")
 
 Ext.define('OMV.module.admin.service.transmissionbt.Settings', {
     extend: 'OMV.workspace.form.Panel',
@@ -28,41 +27,10 @@ Ext.define('OMV.module.admin.service.transmissionbt.Settings', {
     rpcGetMethod: 'getSettings',
     rpcSetMethod: 'setSettings',
 
-    plugins: [{
-        ptype: 'linkedfields',
-        correlations: [{
-            name: [
-                'blocklistsyncfrequency',
-                'blocklisturl'
-            ],
-            conditions: [{
-                name: 'blocklistsyncenabled',
-                value: true
-            }],
-            properties: [
-                '!readOnly',
-                '!allowBlank'
-            ]
-        }, {
-            name: [
-                'rpcusername',
-                'rpcpassword'
-            ],
-            conditions: [{
-                name: 'rpcauthenticationrequired',
-                value: true
-            }],
-            properties: [
-                '!readOnly',
-                '!allowBlank'
-            ]
-        }]
-    }],
-
     getFormItems: function() {
         return [{
             xtype: 'fieldset',
-            title: _('General settings'),
+            title: _('General'),
             defaults: {
                 labelSeparator: ''
             },
@@ -71,30 +39,31 @@ Ext.define('OMV.module.admin.service.transmissionbt.Settings', {
                 name: 'enable',
                 fieldLabel: _('Enable'),
                 checked: false
+            }]
+        }, {
+            xtype: 'fieldset',
+            title: _('Misc'),
+            defaults: {
+                labelSeparator: ''
+            },
+            items: [{
+                xtype: 'numberfield',
+                name: 'cache-size-mb',
+                fieldLabel: _('Cache size'),
+                allowDecimals: false,
+                allowNegative: false,
+                allowBlank: false,
+                value: 4,
+                plugins: [{
+                    ptype: 'fieldinfo',
+                    text: _('Cache size (in MB) to reduce the number of disk reads and writes.')
+                }]
             }, {
                 xtype: 'checkbox',
-                name: 'pexenabled',
-                fieldLabel: _('Peer exchange (PEX)'),
-                checked: true,
-                boxLabel: _('Enable PEX.')
-            }, {
-                xtype: 'checkbox',
-                name: 'dhtenabled',
+                name: 'dht-enabled',
                 fieldLabel: _('Distributed hash table (DHT).'),
                 checked: true,
                 boxLabel: _('Enable DHT.')
-            }, {
-                xtype: 'checkbox',
-                name: 'lpd-enabled',
-                fieldLabel: _('Local peer discovery (LPD).'),
-                checked: false,
-                boxLabel: _('Enable LPD.')
-            }, {
-                xtype: 'checkbox',
-                name: 'utp-enabled',
-                fieldLabel: _('Micro transport protocol (&micro;TP).'),
-                checked: true,
-                boxLabel: _('Enable &micro;TP.')
             }, {
                 xtype: 'combo',
                 name: 'encryption',
@@ -121,6 +90,18 @@ Ext.define('OMV.module.admin.service.transmissionbt.Settings', {
                     ptype: 'fieldinfo',
                     text: _('The peer connection encryption mode.')
                 }]
+            }, {
+                xtype: 'checkbox',
+                name: 'lazy-bitfield-enabled',
+                fieldLabel: _('Lazy Bitfield'),
+                checked: true,
+                boxLabel: _('May help get around some ISP filtering.')
+            }, {
+                xtype: 'checkbox',
+                name: 'lpd-enabled',
+                fieldLabel: _('Local peer discovery (LPD).'),
+                checked: false,
+                boxLabel: _('Enable LPD.')
             }, {
                 xtype: 'combo',
                 name: 'message-level',
@@ -150,10 +131,10 @@ Ext.define('OMV.module.admin.service.transmissionbt.Settings', {
                 }]
             }, {
                 xtype: 'checkbox',
-                name: 'lazy-bitfield-enabled',
-                fieldLabel: _('Lazy Bitfield'),
+                name: 'pex-enabled',
+                fieldLabel: _('Peer exchange (PEX)'),
                 checked: true,
-                boxLabel: _('May help get around some ISP filtering.')
+                boxLabel: _('Enable PEX.')
             }, {
                 xtype: 'checkbox',
                 name: 'scrape-paused-torrents-enabled',
@@ -161,140 +142,11 @@ Ext.define('OMV.module.admin.service.transmissionbt.Settings', {
                 checked: true,
                 boxLabel: _('Enable paused torrent scraping.')
             }, {
-                xtype: 'numberfield',
-                name: 'umask',
-                fieldLabel: _('Umask'),
-                allowDecimals: false,
-                allowNegative: false,
-                allowBlank: false,
-                value: 18,
-                plugins: [{
-                    ptype: 'fieldinfo',
-                    text: _('Sets transmission\'s file mode creation mask.')
-                }]
-            }, {
-                xtype: 'numberfield',
-                name: 'cache-size-mb',
-                fieldLabel: _('Cache size'),
-                allowDecimals: false,
-                allowNegative: false,
-                allowBlank: false,
-                value: 4,
-                plugins: [{
-                    ptype: 'fieldinfo',
-                    text: _('Cache size (in MB) to reduce the number of disk reads and writes.')
-                }]
-            }]
-        }, {
-            xtype: 'fieldset',
-            title: _('RPC/web interface settings'),
-            defaults: {
-                labelSeparator: ''
-            },
-            items: [{
-                xtype: 'numberfield',
-                name: 'rpcport',
-                fieldLabel: _('Port'),
-                vtype: 'port',
-                minValue: 1024,
-                maxValue: 65535,
-                allowDecimals: false,
-                allowNegative: false,
-                allowBlank: false,
-                value: 9091,
-                plugins: [{
-                    ptype: 'fieldinfo',
-                    text: _('Port to open and listen for RPC/web requests on.')
-                }]
-            }, {
-                xtype: 'textfield',
-                name: 'rpcurl',
-                fieldLabel: _('URL'),
-                vtype: 'transmissionbturl',
-                allowBlank: false,
-                value: 'transmission',
-                plugins: [{
-                    ptype: 'fieldinfo',
-                    text: _('URL to access RPC and web interface (http://localhost/&lt;URL&gt;/(rpc|web).')
-                }]
-            }, {
                 xtype: 'checkbox',
-                name: 'rpcauthenticationrequired',
-                fieldLabel: _('Authentication'),
+                name: 'utp-enabled',
+                fieldLabel: _('Micro transport protocol (&micro;TP).'),
                 checked: true,
-                boxLabel: _('Require clients to authenticate themselves.')
-            }, {
-                xtype: 'textfield',
-                name: 'rpcusername',
-                fieldLabel: _('Username'),
-                allowBlank: false,
-                vtype: 'username',
-                plugins: [{
-                    ptype: 'fieldinfo',
-                    text: _('Used for client authentication.')
-                }]
-            }, {
-                xtype: 'passwordfield',
-                name: 'rpcpassword',
-                fieldLabel: _('Password'),
-                allowBlank: false,
-                plugins: [{
-                    ptype: 'fieldinfo',
-                    text: _('Used for client authentication.')
-                }]
-            }]
-        }, {
-            xtype: 'fieldset',
-            title: _('Blocklists'),
-            defaults: {
-                labelSeparator: ''
-            },
-            items: [{
-                xtype: 'checkbox',
-                name: 'blocklistenabled',
-                fieldLabel: _('Enable'),
-                checked: false,
-                boxLabel: _('Use blocklists.')
-            }, {
-                xtype: 'checkbox',
-                name: 'blocklistsyncenabled',
-                fieldLabel: _('Auto sync'),
-                checked: false,
-                boxLabel: _('Update blocklists automatically.')
-            }, {
-                xtype: 'combo',
-                name: 'blocklistsyncfrequency',
-                fieldLabel: _('Sync frequency'),
-                queryMode: 'local',
-                store: Ext.create('Ext.data.SimpleStore', {
-                    fields: [
-                        'value',
-                        'text'
-                    ],
-                    data: [
-                        ['hourly', _('Hourly')],
-                        ['daily', _('Daily')],
-                        ['weekly', _('Weekly')],
-                        ['monthly', _('Monthly')]
-                    ]
-                }),
-                displayField: 'text',
-                valueField: 'value',
-                allowBlank: false,
-                editable: false,
-                triggerAction: 'all',
-                value: 'daily'
-            }, {
-                xtype: 'textfield',
-                name: 'blocklisturl',
-                fieldLabel: _('URL'),
-                allowBlank: true,
-                width: 300,
-                value: 'http://www.example.com/blocklist',
-                plugins: [{
-                    ptype: 'fieldinfo',
-                    text: _('The URL of the blocklist.')
-                }]
+                boxLabel: _('Enable &micro;TP.')
             }]
         }, {
             xtype: 'fieldset',
@@ -321,16 +173,6 @@ Ext.define('OMV.module.admin.service.transmissionbt.Settings', {
             }]
         }];
     }
-});
-
-Ext.apply(Ext.form.VTypes, {
-
-    transmissionbturl: function(v) {
-        return (/^[a-z0-9]+$/i).test(v);
-    },
-    transmissionbturiText: _('Invalid path.'),
-    transmissionbturiMask: /[a-z0-9\-_]/i
-
 });
 
 OMV.WorkspaceManager.registerPanel({

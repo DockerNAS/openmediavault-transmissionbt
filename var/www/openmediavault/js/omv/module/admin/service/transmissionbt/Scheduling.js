@@ -23,8 +23,8 @@ Ext.define('OMV.module.admin.service.transmissionbt.Scheduling', {
     extend: 'OMV.workspace.form.Panel',
 
     rpcService: 'TransmissionBt',
-    rpcGetMethod: 'getScheduling',
-    rpcSetMethod: 'setScheduling',
+    rpcGetMethod: 'getSchedulingSettings',
+    rpcSetMethod: 'setSchedulingSettings',
 
     getFormItems: function() {
         return [{
@@ -201,6 +201,6 @@ OMV.WorkspaceManager.registerPanel({
     id: 'scheduling',
     path: '/service/transmissionbt',
     text: _('Scheduling'),
-    position: 60,
+    position: 80,
     className: 'OMV.module.admin.service.transmissionbt.Scheduling'
 });

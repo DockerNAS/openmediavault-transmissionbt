@@ -23,32 +23,11 @@ Ext.define('OMV.module.admin.service.transmissionbt.Queuing', {
     extend: 'OMV.workspace.form.Panel',
 
     rpcService: 'TransmissionBt',
-    rpcGetMethod: 'getQueuing',
-    rpcSetMethod: 'setQueuing',
+    rpcGetMethod: 'getQueuingSettings',
+    rpcSetMethod: 'setQueuingSettings',
 
     getFormItems: function() {
         return [{
-            xtype: 'fieldset',
-            title: _('General'),
-            defaults: {
-                labelSeparator: ''
-            },
-            items: [{
-                xtype: 'checkbox',
-                name: 'queue-stalled-enabled',
-                fieldLabel: _('Queue stalled'),
-                checked: true,
-                boxLabel: _('Torrents that have not shared data for queue-stalled-minutes are treated as \'stalled\' and are not counted against the queue-download-size and seed-queue-size limits.')
-            }, {
-                xtype: 'numberfield',
-                name: 'queue-stalled-minutes',
-                fieldLabel: _('Stalled minutes'),
-                allowDecimals: false,
-                allowNegative: false,
-                allowBlank: false,
-                value: 30
-            }]
-        }, {
             xtype: 'fieldset',
             title: _('Download queue'),
             defaults: {
@@ -68,6 +47,27 @@ Ext.define('OMV.module.admin.service.transmissionbt.Queuing', {
                 allowNegative: false,
                 allowBlank: false,
                 value: 5
+            }]
+        }, {
+            xtype: 'fieldset',
+            title: _('Queue stalled'),
+            defaults: {
+                labelSeparator: ''
+            },
+            items: [{
+                xtype: 'checkbox',
+                name: 'queue-stalled-enabled',
+                fieldLabel: _('Queue stalled'),
+                checked: true,
+                boxLabel: _('Torrents that have not shared data for queue-stalled-minutes are treated as \'stalled\' and are not counted against the queue-download-size and seed-queue-size limits.')
+            }, {
+                xtype: 'numberfield',
+                name: 'queue-stalled-minutes',
+                fieldLabel: _('Stalled minutes'),
+                allowDecimals: false,
+                allowNegative: false,
+                allowBlank: false,
+                value: 30
             }]
         }, {
             xtype: 'fieldset',
@@ -98,6 +98,6 @@ OMV.WorkspaceManager.registerPanel({
     id: 'queuing',
     path: '/service/transmissionbt',
     text: _('Queuing'),
-    position: 50,
+    position: 60,
     className: 'OMV.module.admin.service.transmissionbt.Queuing'
 });

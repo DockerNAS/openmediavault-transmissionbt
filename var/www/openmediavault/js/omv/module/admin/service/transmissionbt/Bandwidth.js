@@ -23,8 +23,8 @@ Ext.define('OMV.module.admin.service.transmissionbt.Bandwidth', {
     extend: 'OMV.workspace.form.Panel',
 
     rpcService: 'TransmissionBt',
-    rpcGetMethod: 'getBandwidth',
-    rpcSetMethod: 'setBandwidth',
+    rpcGetMethod: 'getBandwidthSettings',
+    rpcSetMethod: 'setBandwidthSettings',
 
     getFormItems: function() {
         return [{
@@ -123,6 +123,6 @@ OMV.WorkspaceManager.registerPanel({
     id: 'bandwidth',
     path: '/service/transmissionbt',
     text: _('Bandwidth'),
-    position: 40,
+    position: 20,
     className: 'OMV.module.admin.service.transmissionbt.Bandwidth'
 });

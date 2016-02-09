@@ -29,73 +29,60 @@ case "$1" in
         SERVICE_XPATH="/config/services/${SERVICE_XPATH_NAME}"
 
         if ! omv_config_exists "${SERVICE_XPATH}"; then
-            echo "Updating configuration"
-
             omv_config_add_element "/config/services" "${SERVICE_XPATH_NAME}"
             omv_config_add_element "${SERVICE_XPATH}" "enable" "0"
-            omv_config_add_element "${SERVICE_XPATH}" "pexenabled" "1"
-            omv_config_add_element "${SERVICE_XPATH}" "dhtenabled" "1"
-            omv_config_add_element "${SERVICE_XPATH}" "lpd-enabled" "0"
-            omv_config_add_element "${SERVICE_XPATH}" "utp-enabled" "1"
-            omv_config_add_element "${SERVICE_XPATH}" "encryption" "1"
-            omv_config_add_element "${SERVICE_XPATH}" "message-level" "2"
-            omv_config_add_element "${SERVICE_XPATH}" "lazy-bitfield-enabled" "1"
-            omv_config_add_element "${SERVICE_XPATH}" "scrape-paused-torrents-enabled" "1"
-            omv_config_add_element "${SERVICE_XPATH}" "umask" "18"
             omv_config_add_element "${SERVICE_XPATH}" "cache-size-mb" "4"
-            omv_config_add_element "${SERVICE_XPATH}" "rpcport" "9091"
-            omv_config_add_element "${SERVICE_XPATH}" "rpcurl" "/transmission/"
-            omv_config_add_element "${SERVICE_XPATH}" "rpcauthenticationrequired" "1"
-            omv_config_add_element "${SERVICE_XPATH}" "rpcusername" "admin"
-            omv_config_add_element "${SERVICE_XPATH}" "rpcpassword" "openmediavault"
-            omv_config_add_element "${SERVICE_XPATH}" "blocklistenabled" "0"
-            omv_config_add_element "${SERVICE_XPATH}" "blocklistsyncenabled" "0"
-            omv_config_add_element "${SERVICE_XPATH}" "blocklistsyncfrequency" "daily"
-            omv_config_add_element "${SERVICE_XPATH}" "blocklisturl" "http://www.example.com/blocklist"
+            omv_config_add_element "${SERVICE_XPATH}" "dht-enabled" "1"
+            omv_config_add_element "${SERVICE_XPATH}" "encryption" "1"
+            omv_config_add_element "${SERVICE_XPATH}" "lazy-bitfield-enabled" "1"
+            omv_config_add_element "${SERVICE_XPATH}" "lpd-enabled" "0"
+            omv_config_add_element "${SERVICE_XPATH}" "message-level" "2"
+            omv_config_add_element "${SERVICE_XPATH}" "pex-enabled" "1"
+            omv_config_add_element "${SERVICE_XPATH}" "scrape-paused-torrents-enabled" "1"
             omv_config_add_element "${SERVICE_XPATH}" "script-torrent-done-enabled" "0"
             omv_config_add_element "${SERVICE_XPATH}" "script-torrent-done-filename"
+            omv_config_add_element "${SERVICE_XPATH}" "utp-enabled" "1"
         fi
 
         if ! omv_config_exists "${SERVICE_XPATH}/modules"; then
             omv_config_add_element "${SERVICE_XPATH}" "modules"
         fi
 
-        if ! omv_config_exists "${SERVICE_XPATH}/modules/filesandlocations"; then
-            omv_config_add_element "${SERVICE_XPATH}/modules" "filesandlocations"
-            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "download.sharedfolderref"
-            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "download-dir"
-            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "incomplete-dir-enabled" "0"
-            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "incomplete.sharedfolderref"
-            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "incomplete-dir" "incomplete"
-            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "watch-dir-enabled" "0"
-            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "watch.sharedfolderref"
-            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "watch-dir" "watch"
-            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "preallocation" "1"
-            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "rename-partial-files" "1"
-            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "start-added-torrents" "1"
-            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "trash-original-torrent-files" "0"
-        fi
-
         if ! omv_config_exists "${SERVICE_XPATH}/modules/bandwidth"; then
             omv_config_add_element "${SERVICE_XPATH}/modules" "bandwidth"
+            omv_config_add_element "${SERVICE_XPATH}/modules/bandwidth" "alt-speed-enabled" "0"
+            omv_config_add_element "${SERVICE_XPATH}/modules/bandwidth" "alt-speed-down" "50"
+            omv_config_add_element "${SERVICE_XPATH}/modules/bandwidth" "alt-speed-up" "50"
             omv_config_add_element "${SERVICE_XPATH}/modules/bandwidth" "speed-limit-down" "100"
             omv_config_add_element "${SERVICE_XPATH}/modules/bandwidth" "speed-limit-down-enabled" "0"
             omv_config_add_element "${SERVICE_XPATH}/modules/bandwidth" "speed-limit-up" "100"
             omv_config_add_element "${SERVICE_XPATH}/modules/bandwidth" "speed-limit-up-enabled" "0"
             omv_config_add_element "${SERVICE_XPATH}/modules/bandwidth" "upload-slots-per-torrent" "14"
-            omv_config_add_element "${SERVICE_XPATH}/modules/bandwidth" "alt-speed-enabled" "0"
-            omv_config_add_element "${SERVICE_XPATH}/modules/bandwidth" "alt-speed-up" "50"
-            omv_config_add_element "${SERVICE_XPATH}/modules/bandwidth" "alt-speed-down" "50"
         fi
 
-        if ! omv_config_exists "${SERVICE_XPATH}/modules/queuing"; then
-            omv_config_add_element "${SERVICE_XPATH}/modules" "queuing"
-            omv_config_add_element "${SERVICE_XPATH}/modules/queuing" "queue-stalled-enabled" "1"
-            omv_config_add_element "${SERVICE_XPATH}/modules/queuing" "queue-stalled-minutes" "30"
-            omv_config_add_element "${SERVICE_XPATH}/modules/queuing" "download-queue-enabled" "1"
-            omv_config_add_element "${SERVICE_XPATH}/modules/queuing" "download-queue-size" "5"
-            omv_config_add_element "${SERVICE_XPATH}/modules/queuing" "seed-queue-enabled" "0"
-            omv_config_add_element "${SERVICE_XPATH}/modules/queuing" "seed-queue-size" "10"
+        if ! omv_config_exists "${SERVICE_XPATH}/modules/blocklists"; then
+            omv_config_add_element "${SERVICE_XPATH}/modules" "blocklists"
+            omv_config_add_element "${SERVICE_XPATH}/modules/blocklists" "blocklist-enabled" "0"
+            omv_config_add_element "${SERVICE_XPATH}/modules/blocklists" "blocklist-sync-enabled" "0"
+            omv_config_add_element "${SERVICE_XPATH}/modules/blocklists" "blocklist-sync-frequency" "daily"
+            omv_config_add_element "${SERVICE_XPATH}/modules/blocklists" "blocklist-url" "http://www.example.com/blocklist"
+        fi
+
+        if ! omv_config_exists "${SERVICE_XPATH}/modules/filesandlocations"; then
+            omv_config_add_element "${SERVICE_XPATH}/modules" "filesandlocations"
+            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "download.sharedfolderref"
+            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "download-dir"
+            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "incomplete.sharedfolderref"
+            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "incomplete-dir" "incomplete"
+            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "incomplete-dir-enabled" "0"
+            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "preallocation" "1"
+            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "rename-partial-files" "1"
+            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "start-added-torrents" "1"
+            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "trash-original-torrent-files" "0"
+            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "umask" "18"
+            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "watch.sharedfolderref"
+            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "watch-dir" "watch"
+            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "watch-dir-enabled" "0"
         fi
 
         if ! omv_config_exists "${SERVICE_XPATH}/modules/peer"; then
@@ -110,6 +97,25 @@ case "$1" in
             omv_config_add_element "${SERVICE_XPATH}/modules/peer" "peer-port-random-low" "1024"
             omv_config_add_element "${SERVICE_XPATH}/modules/peer" "peer-port-random-on-start" "0"
             omv_config_add_element "${SERVICE_XPATH}/modules/peer" "port-forwarding-enabled" "1"
+        fi
+
+        if ! omv_config_exists "${SERVICE_XPATH}/modules/queuing"; then
+            omv_config_add_element "${SERVICE_XPATH}/modules" "queuing"
+            omv_config_add_element "${SERVICE_XPATH}/modules/queuing" "download-queue-enabled" "1"
+            omv_config_add_element "${SERVICE_XPATH}/modules/queuing" "download-queue-size" "5"
+            omv_config_add_element "${SERVICE_XPATH}/modules/queuing" "queue-stalled-enabled" "1"
+            omv_config_add_element "${SERVICE_XPATH}/modules/queuing" "queue-stalled-minutes" "30"
+            omv_config_add_element "${SERVICE_XPATH}/modules/queuing" "seed-queue-enabled" "0"
+            omv_config_add_element "${SERVICE_XPATH}/modules/queuing" "seed-queue-size" "10"
+        fi
+
+        if ! omv_config_exists "${SERVICE_XPATH}/modules/rpc"; then
+            omv_config_add_element "${SERVICE_XPATH}/modules" "rpc"
+            omv_config_add_element "${SERVICE_XPATH}/modules/rpc" "rpc-authentication-required" "1"
+            omv_config_add_element "${SERVICE_XPATH}/modules/rpc" "rpc-enabled" "0"
+            omv_config_add_element "${SERVICE_XPATH}/modules/rpc" "rpc-password" "openmediavault"
+            omv_config_add_element "${SERVICE_XPATH}/modules/rpc" "rpc-port" "9091"
+            omv_config_add_element "${SERVICE_XPATH}/modules/rpc" "rpc-username" "admin"
         fi
 
         if ! omv_config_exists "${SERVICE_XPATH}/modules/scheduling"; then

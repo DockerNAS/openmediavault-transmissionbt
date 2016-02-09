@@ -23,8 +23,8 @@ Ext.define('OMV.module.admin.service.transmissionbt.Peer', {
     extend: 'OMV.workspace.form.Panel',
 
     rpcService: 'TransmissionBt',
-    rpcGetMethod: 'getPeer',
-    rpcSetMethod: 'setPeer',
+    rpcGetMethod: 'getPeerSettings',
+    rpcSetMethod: 'setPeerSettings',
 
     getFormItems: function() {
         return [{
@@ -111,7 +111,7 @@ Ext.define('OMV.module.admin.service.transmissionbt.Peer', {
             }]
         }, {
             xtype: 'fieldset',
-            title: _('Peer ports'),
+            title: _('Peer Ports'),
             defaults: {
                 labelSeparator: ''
             },
@@ -130,12 +130,6 @@ Ext.define('OMV.module.admin.service.transmissionbt.Peer', {
                     ptype: 'fieldinfo',
                     text: _('Port to listen for incoming peer connections.')
                 }]
-            }, {
-                xtype: 'checkbox',
-                name: 'peer-port-random-on-start',
-                fieldLabel: _('Random port'),
-                checked: false,
-                boxLabel: _('Random Port on start.')
             }, {
                 xtype: 'numberfield',
                 name: 'peer-port-random-low',
@@ -160,6 +154,12 @@ Ext.define('OMV.module.admin.service.transmissionbt.Peer', {
                 value: 65535
             }, {
                 xtype: 'checkbox',
+                name: 'peer-port-random-on-start',
+                fieldLabel: _('Random port'),
+                boxLabel: _('Random port on start.'),
+                checked: false
+            }, {
+                xtype: 'checkbox',
                 name: 'port-forwarding-enabled',
                 fieldLabel: _('Port forwarding'),
                 checked: true,
@@ -173,6 +173,6 @@ OMV.WorkspaceManager.registerPanel({
     id: 'peer',
     path: '/service/transmissionbt',
     text: _('Peer'),
-    position: 30,
+    position: 50,
     className: 'OMV.module.admin.service.transmissionbt.Peer'
 });

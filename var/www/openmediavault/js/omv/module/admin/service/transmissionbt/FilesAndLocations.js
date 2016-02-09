@@ -28,8 +28,8 @@ Ext.define('OMV.module.admin.service.transmissionbt.FilesAndLocations', {
     ],
 
     rpcService: 'TransmissionBt',
-    rpcGetMethod: 'getFilesAndLocations',
-    rpcSetMethod: 'setFilesAndLocations',
+    rpcGetMethod: 'getFilesAndLocationsSettings',
+    rpcSetMethod: 'setFilesAndLocationsSettings',
 
     plugins: [{
         ptype: 'linkedfields',
@@ -206,15 +206,27 @@ Ext.define('OMV.module.admin.service.transmissionbt.FilesAndLocations', {
                 fieldLabel: _('Trash original'),
                 checked: false,
                 boxLabel: _('Delete torrents added from the watch directory.')
+            }, {
+                xtype: 'numberfield',
+                name: 'umask',
+                fieldLabel: _('Umask'),
+                allowDecimals: false,
+                allowNegative: false,
+                allowBlank: false,
+                value: 18,
+                plugins: [{
+                    ptype: 'fieldinfo',
+                    text: _('Sets transmission\'s file mode creation mask.')
+                }]
             }]
         }];
     }
 });
 
 OMV.WorkspaceManager.registerPanel({
-    id: 'filesandlocations',
+    id: 'files-and-locations',
     path: '/service/transmissionbt',
-    text: _('Files and locations'),
-    position: 20,
+    text: _('Files and Locations'),
+    position: 40,
     className: 'OMV.module.admin.service.transmissionbt.FilesAndLocations'
 });
