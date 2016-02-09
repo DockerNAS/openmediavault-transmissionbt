@@ -146,12 +146,19 @@ generate_cron()
         [ -e "${crondir}/transmissionbt" ] && rm "${crondir}/transmissionbt"
     done
 
+    # Check that everything required is enabled.
     [ "$(omv_config_get "${OMV_TRANSMISSIONBT_XPATH}/enable")" = "0" ] && return 0
     [ "$(omv_config_get "${OMV_TRANSMISSIONBT_XPATH}/modules/blocklists/blocklist-sync-enabled")" = "0" ] && return 0
+    [ "$(omv_config_get "${OMV_TRANSMISSIONBT_XPATH}/modules/rpc/rpc-enabled")" = "0" ] && return 0
 
+    # Fetch the update interval.
     local blocklist_sync_frequency=$(omv_config_get "${OMV_TRANSMISSIONBT_XPATH}/modules/blocklists/blocklist-sync-frequency")
     local cronfile="/etc/cron.${blocklist_sync_frequency}/transmissionbt"
 
+    # Make sure the cron directory exist.
+    [ ! -d "/etc/cron.${blocklist_sync_frequency}" ] && return 1
+
+    # Start creating the file.
     touch "${cronfile}"
     chmod 700 "${cronfile}"
 
@@ -163,7 +170,12 @@ generate_cron()
         -n \
         -o "set -e" -n \
         -n \
-        -o "TR_AUTH=" -v rpc-username -o ":" -v rpc-password -o " transmission-remote http://localhost:" -v rpc-port "/transmission/rpc --authenv --blocklist-update 1>/dev/null" -n \
+        -i "rpc-authentication-required[. = '1']" \
+            -o "TR_AUTH=" -v rpc-username -o ":" -v rpc-password -o " " -b \
+        -o "transmission-remote http://localhost:" -v rpc-port -o "/transmission/rpc" \
+        -i "rpc-authentication-required[. = '1']" \
+            -o " --authenv" -b \
+        -o " --blocklist-update 1>/dev/null" -n \
         ${OMV_CONFIG_FILE} | xmlstarlet unesc > "${cronfile}"
 }
 
