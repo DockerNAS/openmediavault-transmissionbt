@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2014-2015 OpenMediaVault Plugin Developers
+ * Copyright (C) 2014-2015 OpenMediaVault Plugin Developers.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once "transmission/ITorrent.php";
+require_once 'transmission/ITorrent.php';
 
 class TransmissionTorrent implements ITorrent
 {
@@ -30,76 +30,76 @@ class TransmissionTorrent implements ITorrent
 
     public function getId()
     {
-        return $this->torrent["id"];
+        return $this->torrent['id'];
     }
 
     public function getName()
     {
-        return $this->torrent["name"];
+        return $this->torrent['name'];
     }
 
     public function getStatus()
     {
-        return $this->torrent["status"];
+        return $this->torrent['status'];
     }
 
     public function getTotalSize()
     {
-        return $this->torrent["totalSize"];
+        return $this->torrent['totalSize'];
     }
 
     public function getHaveValid()
     {
-        return $this->torrent["haveValid"];
+        return $this->torrent['haveValid'];
     }
 
     public function getPercentDownloaded()
     {
-        return $this->torrent["percentDone"];
+        return $this->torrent['percentDone'];
     }
 
     public function getEta()
     {
-        return $this->torrent["eta"];
+        return $this->torrent['eta'];
     }
 
     public function getConnectedPeers()
     {
-        return $this->torrent["peersConnected"];
+        return $this->torrent['peersConnected'];
     }
 
     public function getConnectedPeersSending()
     {
-        return $this->torrent["peersSendingToUs"];
+        return $this->torrent['peersSendingToUs'];
     }
 
     public function getDownloadSpeed()
     {
-        return $this->torrent["rateDownload"];
+        return $this->torrent['rateDownload'];
     }
 
     public function getUploadSpeed()
     {
-        return $this->torrent["rateUpload"];
+        return $this->torrent['rateUpload'];
     }
 
     public function getDateAdded()
     {
-        return $this->torrent["addedDate"];
+        return $this->torrent['addedDate'];
     }
 
     public function getDateDone()
     {
-        return $this->torrent["doneDate"];
+        return $this->torrent['doneDate'];
     }
 
     public function getRatio()
     {
-        return $this->torrent["uploadRatio"];
+        return $this->torrent['uploadRatio'];
     }
 
     public function getQueuePosition()
     {
-        return $this->torrent["queuePosition"];
+        return $this->torrent['queuePosition'];
     }
 }

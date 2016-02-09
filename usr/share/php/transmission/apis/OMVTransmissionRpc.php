@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2014-2015 OpenMediaVault Plugin Developers
+ * Copyright (C) 2014-2015 OpenMediaVault Plugin Developers.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,29 +16,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-require_once "transmission/apis/TransmissionRPC.php";
+require_once 'transmission/apis/TransmissionRPC.php';
 
 class OMVTransmissionRpc extends TransmissionRPC
 {
     /**
-     * Move torrents in the queue
+     * Move torrents in the queue.
      *
      * @param int|array $ids    A list of transmission torrent ids
      * @param string    $action The move action to perform
-     *
-     * @return void
      */
     public function queueMove($ids, $action)
     {
         switch ($action) {
-            case "top":
-            case "up":
-            case "down":
-            case "bottom":
+            case 'top':
+            case 'up':
+            case 'down':
+            case 'bottom':
                 break;
             default:
-                throw new \Exception("$action is not a valid action.");
+                throw new \Exception($action.' is not a valid action.');
                 break;
         }
 
@@ -47,7 +44,7 @@ class OMVTransmissionRpc extends TransmissionRPC
         }
 
         // Convert $ids to an array if only a single id was passed
-        $request = ["ids" => $ids];
-        $this->request("queue-move-$action", $request);
+        $request = ['ids' => $ids];
+        $this->request('queue-move-'.$action, $request);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2014-2015 OpenMediaVault Plugin Developers
+ * Copyright (C) 2014-2015 OpenMediaVault Plugin Developers.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -127,7 +127,7 @@ interface ITorrent
     /**
      * Get the upload ratio of the torrent. Return -1 if unavailable, and -2 if infinite.
      *
-     * @return float|integer
+     * @return float|int
      */
     public function getRatio();
 

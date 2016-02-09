@@ -19,100 +19,100 @@
 // require("js/omv/WorkspaceManager.js")
 // require("js/omv/workspace/form/Panel.js")
 
-Ext.define("OMV.module.admin.service.transmissionbt.settings.Bandwidth", {
-    extend: "OMV.workspace.form.Panel",
+Ext.define('OMV.module.admin.service.transmissionbt.settings.Bandwidth', {
+    extend: 'OMV.workspace.form.Panel',
 
-    rpcService: "TransmissionBt",
-    rpcGetMethod: "getBandwidth",
-    rpcSetMethod: "setBandwidth",
+    rpcService: 'TransmissionBt',
+    rpcGetMethod: 'getBandwidth',
+    rpcSetMethod: 'setBandwidth',
 
     getFormItems: function() {
         return [{
-            xtype: "fieldset",
-            title: _("Speed"),
+            xtype: 'fieldset',
+            title: _('Speed'),
             defaults: {
-                labelSeparator: ""
+                labelSeparator: ''
             },
             items: [{
-                xtype: "checkbox",
-                name: "speed-limit-down-enabled",
-                fieldLabel: _("Limit download"),
+                xtype: 'checkbox',
+                name: 'speed-limit-down-enabled',
+                fieldLabel: _('Limit download'),
                 checked: false,
-                boxLabel: _("Enable download limit.")
+                boxLabel: _('Enable download limit.')
             }, {
-                xtype: "numberfield",
-                name: "speed-limit-down",
-                fieldLabel: _("Download"),
+                xtype: 'numberfield',
+                name: 'speed-limit-down',
+                fieldLabel: _('Download'),
                 allowDecimals: false,
                 allowNegative: false,
                 allowBlank: false,
                 value: 100,
                 plugins: [{
-                    ptype: "fieldinfo",
-                    text: _("Limit download speed. Value is KB/s.")
+                    ptype: 'fieldinfo',
+                    text: _('Limit download speed. Value is KB/s.')
                 }]
             }, {
-                xtype: "checkbox",
-                name: "speed-limit-up-enabled",
-                fieldLabel: _("Limit upload"),
+                xtype: 'checkbox',
+                name: 'speed-limit-up-enabled',
+                fieldLabel: _('Limit upload'),
                 checked: false,
-                boxLabel: _("Enable upload limit.")
+                boxLabel: _('Enable upload limit.')
             }, {
-                xtype: "numberfield",
-                name: "speed-limit-up",
-                fieldLabel: _("Upload"),
+                xtype: 'numberfield',
+                name: 'speed-limit-up',
+                fieldLabel: _('Upload'),
                 allowDecimals: false,
                 allowNegative: false,
                 allowBlank: false,
                 value: 100,
                 plugins: [{
-                    ptype: "fieldinfo",
-                    text: _("Limit upload speed. Value is KB/s.")
+                    ptype: 'fieldinfo',
+                    text: _('Limit upload speed. Value is KB/s.')
                 }]
             }, {
-                xtype: "numberfield",
-                name: "upload-slots-per-torrent",
-                fieldLabel: _("Upload slots"),
+                xtype: 'numberfield',
+                name: 'upload-slots-per-torrent',
+                fieldLabel: _('Upload slots'),
                 allowDecimals: false,
                 allowNegative: false,
                 allowBlank: false,
                 value: 14
             }]
         }, {
-            xtype: "fieldset",
-            title: _("Turtle mode"),
+            xtype: 'fieldset',
+            title: _('Turtle mode'),
             defaults: {
-                labelSeparator: ""
+                labelSeparator: ''
             },
             items: [{
-                xtype: "checkbox",
-                name: "alt-speed-enabled",
-                fieldLabel: _("Enable"),
+                xtype: 'checkbox',
+                name: 'alt-speed-enabled',
+                fieldLabel: _('Enable'),
                 checked: false,
-                boxLabel: _("Enable turtle mode.")
+                boxLabel: _('Enable turtle mode.')
             }, {
-                xtype: "numberfield",
-                name: "alt-speed-down",
-                fieldLabel: _("Download"),
+                xtype: 'numberfield',
+                name: 'alt-speed-down',
+                fieldLabel: _('Download'),
                 allowDecimals: false,
                 allowNegative: false,
                 allowBlank: false,
                 value: 50,
                 plugins: [{
-                    ptype: "fieldinfo",
-                    text: _("Turtle mode download speed. Value is KB/s.")
+                    ptype: 'fieldinfo',
+                    text: _('Turtle mode download speed. Value is KB/s.')
                 }]
             }, {
-                xtype: "numberfield",
-                name: "alt-speed-up",
-                fieldLabel: _("Upload"),
+                xtype: 'numberfield',
+                name: 'alt-speed-up',
+                fieldLabel: _('Upload'),
                 allowDecimals: false,
                 allowNegative: false,
                 allowBlank: false,
                 value: 50,
                 plugins: [{
-                    ptype: "fieldinfo",
-                    text: _("Turtle mode upload speed. Value is KB/s.")
+                    ptype: 'fieldinfo',
+                    text: _('Turtle mode upload speed. Value is KB/s.')
                 }]
             }]
         }];

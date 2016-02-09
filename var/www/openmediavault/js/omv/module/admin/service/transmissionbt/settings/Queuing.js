@@ -19,72 +19,72 @@
 // require("js/omv/WorkspaceManager.js")
 // require("js/omv/workspace/form/Panel.js")
 
-Ext.define("OMV.module.admin.service.transmissionbt.settings.Queuing", {
-    extend: "OMV.workspace.form.Panel",
+Ext.define('OMV.module.admin.service.transmissionbt.settings.Queuing', {
+    extend: 'OMV.workspace.form.Panel',
 
-    rpcService: "TransmissionBt",
-    rpcGetMethod: "getQueuing",
-    rpcSetMethod: "setQueuing",
+    rpcService: 'TransmissionBt',
+    rpcGetMethod: 'getQueuing',
+    rpcSetMethod: 'setQueuing',
 
     getFormItems: function() {
         return [{
-            xtype: "fieldset",
-            title: _("General"),
+            xtype: 'fieldset',
+            title: _('General'),
             defaults: {
-                labelSeparator: ""
+                labelSeparator: ''
             },
             items: [{
-                xtype: "checkbox",
-                name: "queue-stalled-enabled",
-                fieldLabel: _("Queue stalled"),
+                xtype: 'checkbox',
+                name: 'queue-stalled-enabled',
+                fieldLabel: _('Queue stalled'),
                 checked: true,
-                boxLabel: _("Torrents that have not shared data for queue-stalled-minutes are treated as 'stalled' and are not counted against the queue-download-size and seed-queue-size limits.")
+                boxLabel: _('Torrents that have not shared data for queue-stalled-minutes are treated as \'stalled\' and are not counted against the queue-download-size and seed-queue-size limits.')
             }, {
-                xtype: "numberfield",
-                name: "queue-stalled-minutes",
-                fieldLabel: _("Stalled minutes"),
+                xtype: 'numberfield',
+                name: 'queue-stalled-minutes',
+                fieldLabel: _('Stalled minutes'),
                 allowDecimals: false,
                 allowNegative: false,
                 allowBlank: false,
                 value: 30
             }]
         }, {
-            xtype: "fieldset",
-            title: _("Download queue"),
+            xtype: 'fieldset',
+            title: _('Download queue'),
             defaults: {
-                labelSeparator: ""
+                labelSeparator: ''
             },
             items: [{
-                xtype: "checkbox",
-                name: "download-queue-enabled",
-                fieldLabel: _("Download"),
+                xtype: 'checkbox',
+                name: 'download-queue-enabled',
+                fieldLabel: _('Download'),
                 checked: true,
-                boxLabel: _("Transmission will only download download-queue-size non-stalled torrents at once.")
+                boxLabel: _('Transmission will only download download-queue-size non-stalled torrents at once.')
             }, {
-                xtype: "numberfield",
-                name: "download-queue-size",
-                fieldLabel: _("Size"),
+                xtype: 'numberfield',
+                name: 'download-queue-size',
+                fieldLabel: _('Size'),
                 allowDecimals: false,
                 allowNegative: false,
                 allowBlank: false,
                 value: 5
             }]
         }, {
-            xtype: "fieldset",
-            title: _("Seed queue"),
+            xtype: 'fieldset',
+            title: _('Seed queue'),
             defaults: {
-                labelSeparator: ""
+                labelSeparator: ''
             },
             items: [{
-                xtype: "checkbox",
-                name: "seed-queue-enabled",
-                fieldLabel: _("Seed"),
+                xtype: 'checkbox',
+                name: 'seed-queue-enabled',
+                fieldLabel: _('Seed'),
                 checked: false,
-                boxLabel: _("Transmission will only seed seed-queue-size non-stalled torrents at once.")
+                boxLabel: _('Transmission will only seed seed-queue-size non-stalled torrents at once.')
             }, {
-                xtype: "numberfield",
-                name: "seed-queue-size",
-                fieldLabel: _("Size"),
+                xtype: 'numberfield',
+                name: 'seed-queue-size',
+                fieldLabel: _('Size'),
                 allowDecimals: false,
                 allowNegative: false,
                 allowBlank: false,

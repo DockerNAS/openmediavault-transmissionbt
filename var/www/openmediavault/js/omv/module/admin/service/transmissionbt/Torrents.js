@@ -19,9 +19,9 @@
 // require("js/omv/module/admin/service/transmissionbt/torrents/TorrentList.js")
 
 OMV.WorkspaceManager.registerPanel({
-    id: "torrents",
-    path: "/service/transmissionbt",
-    text: _("Torrents"),
+    id: 'torrents',
+    path: '/service/transmissionbt',
+    text: _('Torrents'),
     position: 20,
-    className: "OMV.module.admin.service.transmissionbt.torrents.TorrentList"
+    className: 'OMV.module.admin.service.transmissionbt.torrents.TorrentList'
 });

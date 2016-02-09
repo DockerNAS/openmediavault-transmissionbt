@@ -18,9 +18,9 @@
 // require("js/omv/WorkspaceManager.js")
 
 OMV.WorkspaceManager.registerNode({
-    id: "transmissionbt",
-    path: "/service",
-    text: _("BitTorrent"),
-    icon16: "images/transmissionbt.png",
-    iconSvg: "images/transmissionbt.svg"
+    id: 'transmissionbt',
+    path: '/service',
+    text: _('BitTorrent'),
+    icon16: 'images/transmissionbt.png',
+    iconSvg: 'images/transmissionbt.svg'
 });

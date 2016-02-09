@@ -19,27 +19,27 @@
 // require("js/omv/WorkspaceManager.js")
 // require("js/omv/workspace/window/Form.js")
 
-Ext.define("OMV.module.admin.service.transmissionbt.torrents.window.AddTorrent", {
-    extend: "OMV.workspace.window.Form",
+Ext.define('OMV.module.admin.service.transmissionbt.torrents.window.AddTorrent', {
+    extend: 'OMV.workspace.window.Form',
 
-    rpcService: "TransmissionBt",
-    rpcSetMethod: "addTorrent",
+    rpcService: 'TransmissionBt',
+    rpcSetMethod: 'addTorrent',
     hideResetButton: true,
     width: 500,
-    title: _("Add Torrent by URL"),
-    okButtonText: _("OK"),
-    submitMsg: _("Adding Torrent ..."),
+    title: _('Add Torrent by URL'),
+    okButtonText: _('OK'),
+    submitMsg: _('Adding Torrent ...'),
 
     getFormItems: function() {
         return [{
-            xtype: "textfield",
-            name: "url",
-            fieldLabel: _("URL"),
+            xtype: 'textfield',
+            name: 'url',
+            fieldLabel: _('URL'),
             allowBlank: false
         }, {
-            xtype: "checkbox",
-            name: "start_download",
-            fieldLabel: _("Start download"),
+            xtype: 'checkbox',
+            name: 'start_download',
+            fieldLabel: _('Start download'),
             checked: true
         }];
     },

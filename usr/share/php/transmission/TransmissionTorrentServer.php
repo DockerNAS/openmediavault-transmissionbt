@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2014-2015 OpenMediaVault Plugin Developers
+ * Copyright (C) 2014-2015 OpenMediaVault Plugin Developers.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once "transmission/apis/OMVTransmissionRpc.php";
-require_once "transmission/ITorrentServer.php";
-require_once "transmission/TransmissionTorrent.php";
+require_once 'transmission/apis/OMVTransmissionRpc.php';
+require_once 'transmission/ITorrentServer.php';
+require_once 'transmission/TransmissionTorrent.php';
 
 class TransmissionTorrentServer implements ITorrentServer
 {
@@ -27,7 +27,7 @@ class TransmissionTorrentServer implements ITorrentServer
 
     public static function getDefaultServerAddress()
     {
-        return "http://localhost:9091/transmission/rpc";
+        return 'http://localhost:9091/transmission/rpc';
     }
 
     public function connect($url, $username, $password)
@@ -40,27 +40,27 @@ class TransmissionTorrentServer implements ITorrentServer
         $result = $this->rpc->get(
             [],
             [
-                "id",
-                "name",
-                "status",
-                "doneDate",
-                "addedDate",
-                "haveValid",
-                "totalSize",
-                "percentDone",
-                "eta",
-                "peersConnected",
-                "peersSendingToUs",
-                "rateDownload",
-                "rateUpload",
-                "uploadRatio",
-                "queuePosition"
+                'id',
+                'name',
+                'status',
+                'doneDate',
+                'addedDate',
+                'haveValid',
+                'totalSize',
+                'percentDone',
+                'eta',
+                'peersConnected',
+                'peersSendingToUs',
+                'rateDownload',
+                'rateUpload',
+                'uploadRatio',
+                'queuePosition',
             ]
         );
 
         $torrents = [];
 
-        foreach ($result["arguments"]["torrents"] as $torrent) {
+        foreach ($result['arguments']['torrents'] as $torrent) {
             $torrents[] = new TransmissionTorrent($torrent);
         }
 
@@ -69,17 +69,17 @@ class TransmissionTorrentServer implements ITorrentServer
 
     public function add($location, $paused = false)
     {
-        $result = $this->rpc->add($location, "", ["paused" => $paused]);
+        $result = $this->rpc->add($location, '', ['paused' => $paused]);
 
-        if (isset($result["result"])) {
-            if ($result["result"] == "success") {
+        if (isset($result['result'])) {
+            if ($result['result'] == 'success') {
                 return true;
             }
 
-            throw new Exception($result["result"]);
+            throw new Exception($result['result']);
         }
 
-        throw new Exception("Something unexpected went wrong when adding the torrent");
+        throw new Exception('Something unexpected went wrong when adding the torrent');
     }
 
     public function delete($torrent, $deleteLocalData)
