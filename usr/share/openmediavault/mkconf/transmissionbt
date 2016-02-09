@@ -219,6 +219,9 @@ generate_cron()
     local blocklistsyncfrequency=$(omv_config_get "${OMV_TRANSMISSIONBT_XPATH}/blocklistsyncfrequency")
     local cronfile="/etc/cron.${blocklistsyncfrequency}/transmissionbt"
 
+    touch "${cronfile}"
+    chmod 700 "${cronfile}"
+
     xmlstarlet sel -t -m "${OMV_TRANSMISSIONBT_XPATH}" \
         -o "#!/bin/sh" -n \
         -o "#" -n \
@@ -227,12 +230,8 @@ generate_cron()
         -n \
         -o "set -e" -n \
         -n \
-        -o "transmission-remote http://localhost:" -v rpcport -v rpcurl -o "rpc" \
-        -o " -n " -v rpcusername -o ":" -v rpcpassword \
-        -o " --blocklist-update 1>/dev/null" -n \
-        ${OMV_CONFIG_FILE} | xmlstarlet unesc > ${cronfile}
-
-    chmod 700 ${cronfile}
+        -o "TR_AUTH=" -v rpcusername -o ":" -v rpcpassword -o " transmission-remote http://localhost:" -v rpcport -v rpcurl -o "rpc --authenv --blocklist-update 1>/dev/null" -n \
+        ${OMV_CONFIG_FILE} | xmlstarlet unesc > "${cronfile}"
 }
 
 create_dirs()
