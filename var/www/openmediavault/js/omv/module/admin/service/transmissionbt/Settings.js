@@ -1,4 +1,6 @@
 /**
+ * Copyright (C) 2009-2012 Volker Theile <volker.theile@openmediavault.org>
+ * Copyright (C) 2011-2012 Marcel Beck <marcel.beck@mbeck.org>
  * Copyright (C) 2013-2015 OpenMediaVault Plugin Developers
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,51 +18,319 @@
  */
 
 // require("js/omv/WorkspaceManager.js")
-// require("js/omv/workspace/tab/Panel.js")
-// require("js/omv/module/admin/service/transmissionbt/settings/Bandwidth.js")
-// require("js/omv/module/admin/service/transmissionbt/settings/FilesAndLocations.js")
-// require("js/omv/module/admin/service/transmissionbt/settings/Peer.js")
-// require("js/omv/module/admin/service/transmissionbt/settings/Queuing.js")
-// require("js/omv/module/admin/service/transmissionbt/settings/Scheduling.js")
-// require("js/omv/module/admin/service/transmissionbt/settings/Settings.js")
+// require("js/omv/workspace/form/Panel.js")
+// require("js/omv/form/plugin/LinkedFields.js")
 
 Ext.define('OMV.module.admin.service.transmissionbt.Settings', {
-    extend: 'OMV.workspace.tab.Panel',
-    requires: [
-        'OMV.module.admin.service.transmissionbt.settings.Bandwidth',
-        'OMV.module.admin.service.transmissionbt.settings.FilesAndLocations',
-        'OMV.module.admin.service.transmissionbt.settings.Peer',
-        'OMV.module.admin.service.transmissionbt.settings.Queuing',
-        'OMV.module.admin.service.transmissionbt.settings.Scheduling',
-        'OMV.module.admin.service.transmissionbt.settings.Settings'
-    ],
+    extend: 'OMV.workspace.form.Panel',
 
-    initComponent: function() {
-        Ext.apply(this, {
-            items: [
-                Ext.create('OMV.module.admin.service.transmissionbt.settings.Settings', {
-                    title: _('Settings')
-                }),
-                Ext.create('OMV.module.admin.service.transmissionbt.settings.FilesAndLocations', {
-                    title: _('Files and locations')
-                }),
-                Ext.create('OMV.module.admin.service.transmissionbt.settings.Peer', {
-                    title: _('Peer')
-                }),
-                Ext.create('OMV.module.admin.service.transmissionbt.settings.Bandwidth', {
-                    title: _('Bandwidth')
-                }),
-                Ext.create('OMV.module.admin.service.transmissionbt.settings.Queuing', {
-                    title: _('Queuing')
-                }),
-                Ext.create('OMV.module.admin.service.transmissionbt.settings.Scheduling', {
-                    title: _('Scheduling')
-                })
+    rpcService: 'TransmissionBt',
+    rpcGetMethod: 'getSettings',
+    rpcSetMethod: 'setSettings',
+
+    plugins: [{
+        ptype: 'linkedfields',
+        correlations: [{
+            name: [
+                'blocklistsyncfrequency',
+                'blocklisturl'
+            ],
+            conditions: [{
+                name: 'blocklistsyncenabled',
+                value: true
+            }],
+            properties: [
+                '!readOnly',
+                '!allowBlank'
             ]
-        });
+        }, {
+            name: [
+                'rpcusername',
+                'rpcpassword'
+            ],
+            conditions: [{
+                name: 'rpcauthenticationrequired',
+                value: true
+            }],
+            properties: [
+                '!readOnly',
+                '!allowBlank'
+            ]
+        }]
+    }],
 
-        this.callParent(arguments);
+    getFormItems: function() {
+        return [{
+            xtype: 'fieldset',
+            title: _('General settings'),
+            defaults: {
+                labelSeparator: ''
+            },
+            items: [{
+                xtype: 'checkbox',
+                name: 'enable',
+                fieldLabel: _('Enable'),
+                checked: false
+            }, {
+                xtype: 'checkbox',
+                name: 'pexenabled',
+                fieldLabel: _('Peer exchange (PEX)'),
+                checked: true,
+                boxLabel: _('Enable PEX.')
+            }, {
+                xtype: 'checkbox',
+                name: 'dhtenabled',
+                fieldLabel: _('Distributed hash table (DHT).'),
+                checked: true,
+                boxLabel: _('Enable DHT.')
+            }, {
+                xtype: 'checkbox',
+                name: 'lpd-enabled',
+                fieldLabel: _('Local peer discovery (LPD).'),
+                checked: false,
+                boxLabel: _('Enable LPD.')
+            }, {
+                xtype: 'checkbox',
+                name: 'utp-enabled',
+                fieldLabel: _('Micro transport protocol (&micro;TP).'),
+                checked: true,
+                boxLabel: _('Enable &micro;TP.')
+            }, {
+                xtype: 'combo',
+                name: 'encryption',
+                fieldLabel: _('Encryption'),
+                queryMode: 'local',
+                store: Ext.create('Ext.data.ArrayStore', {
+                    fields: [
+                        'value',
+                        'text'
+                    ],
+                    data: [
+                        [0, _('Off')],
+                        [1, _('Preferred')],
+                        [2, _('Forced')]
+                    ]
+                }),
+                displayField: 'text',
+                valueField: 'value',
+                allowBlank: false,
+                editable: false,
+                triggerAction: 'all',
+                value: 1,
+                plugins: [{
+                    ptype: 'fieldinfo',
+                    text: _('The peer connection encryption mode.')
+                }]
+            }, {
+                xtype: 'combo',
+                name: 'message-level',
+                fieldLabel: _('Message level'),
+                queryMode: 'local',
+                store: Ext.create('Ext.data.ArrayStore', {
+                    fields: [
+                        'value',
+                        'text'
+                    ],
+                    data: [
+                        [0, _('None')],
+                        [1, _('Error')],
+                        [2, _('Info')],
+                        [3, _('Debug')]
+                    ]
+                }),
+                displayField: 'text',
+                valueField: 'value',
+                allowBlank: false,
+                editable: false,
+                triggerAction: 'all',
+                value: 2,
+                plugins: [{
+                    ptype: 'fieldinfo',
+                    text: _('Set verbosity of transmission messages.')
+                }]
+            }, {
+                xtype: 'checkbox',
+                name: 'lazy-bitfield-enabled',
+                fieldLabel: _('Lazy Bitfield'),
+                checked: true,
+                boxLabel: _('May help get around some ISP filtering.')
+            }, {
+                xtype: 'checkbox',
+                name: 'scrape-paused-torrents-enabled',
+                fieldLabel: _('Scrape paused torrents.'),
+                checked: true,
+                boxLabel: _('Enable paused torrent scraping.')
+            }, {
+                xtype: 'numberfield',
+                name: 'umask',
+                fieldLabel: _('Umask'),
+                allowDecimals: false,
+                allowNegative: false,
+                allowBlank: false,
+                value: 18,
+                plugins: [{
+                    ptype: 'fieldinfo',
+                    text: _('Sets transmission\'s file mode creation mask.')
+                }]
+            }, {
+                xtype: 'numberfield',
+                name: 'cache-size-mb',
+                fieldLabel: _('Cache size'),
+                allowDecimals: false,
+                allowNegative: false,
+                allowBlank: false,
+                value: 4,
+                plugins: [{
+                    ptype: 'fieldinfo',
+                    text: _('Cache size (in MB) to reduce the number of disk reads and writes.')
+                }]
+            }]
+        }, {
+            xtype: 'fieldset',
+            title: _('RPC/web interface settings'),
+            defaults: {
+                labelSeparator: ''
+            },
+            items: [{
+                xtype: 'numberfield',
+                name: 'rpcport',
+                fieldLabel: _('Port'),
+                vtype: 'port',
+                minValue: 1024,
+                maxValue: 65535,
+                allowDecimals: false,
+                allowNegative: false,
+                allowBlank: false,
+                value: 9091,
+                plugins: [{
+                    ptype: 'fieldinfo',
+                    text: _('Port to open and listen for RPC/web requests on.')
+                }]
+            }, {
+                xtype: 'textfield',
+                name: 'rpcurl',
+                fieldLabel: _('URL'),
+                vtype: 'transmissionbturl',
+                allowBlank: false,
+                value: 'transmission',
+                plugins: [{
+                    ptype: 'fieldinfo',
+                    text: _('URL to access RPC and web interface (http://localhost/&lt;URL&gt;/(rpc|web).')
+                }]
+            }, {
+                xtype: 'checkbox',
+                name: 'rpcauthenticationrequired',
+                fieldLabel: _('Authentication'),
+                checked: true,
+                boxLabel: _('Require clients to authenticate themselves.')
+            }, {
+                xtype: 'textfield',
+                name: 'rpcusername',
+                fieldLabel: _('Username'),
+                allowBlank: false,
+                vtype: 'username',
+                plugins: [{
+                    ptype: 'fieldinfo',
+                    text: _('Used for client authentication.')
+                }]
+            }, {
+                xtype: 'passwordfield',
+                name: 'rpcpassword',
+                fieldLabel: _('Password'),
+                allowBlank: false,
+                plugins: [{
+                    ptype: 'fieldinfo',
+                    text: _('Used for client authentication.')
+                }]
+            }]
+        }, {
+            xtype: 'fieldset',
+            title: _('Blocklists'),
+            defaults: {
+                labelSeparator: ''
+            },
+            items: [{
+                xtype: 'checkbox',
+                name: 'blocklistenabled',
+                fieldLabel: _('Enable'),
+                checked: false,
+                boxLabel: _('Use blocklists.')
+            }, {
+                xtype: 'checkbox',
+                name: 'blocklistsyncenabled',
+                fieldLabel: _('Auto sync'),
+                checked: false,
+                boxLabel: _('Update blocklists automatically.')
+            }, {
+                xtype: 'combo',
+                name: 'blocklistsyncfrequency',
+                fieldLabel: _('Sync frequency'),
+                queryMode: 'local',
+                store: Ext.create('Ext.data.SimpleStore', {
+                    fields: [
+                        'value',
+                        'text'
+                    ],
+                    data: [
+                        ['hourly', _('Hourly')],
+                        ['daily', _('Daily')],
+                        ['weekly', _('Weekly')],
+                        ['monthly', _('Monthly')]
+                    ]
+                }),
+                displayField: 'text',
+                valueField: 'value',
+                allowBlank: false,
+                editable: false,
+                triggerAction: 'all',
+                value: 'daily'
+            }, {
+                xtype: 'textfield',
+                name: 'blocklisturl',
+                fieldLabel: _('URL'),
+                allowBlank: true,
+                width: 300,
+                value: 'http://www.example.com/blocklist',
+                plugins: [{
+                    ptype: 'fieldinfo',
+                    text: _('The URL of the blocklist.')
+                }]
+            }]
+        }, {
+            xtype: 'fieldset',
+            title: _('Script to process after torrent finishes'),
+            defaults: {
+                labelSeparator: ''
+            },
+            items: [{
+                xtype: 'checkbox',
+                name: 'script-torrent-done-enabled',
+                fieldLabel: _('Enable'),
+                checked: false,
+                boxLabel: _('Run a script at torrent completion.')
+            }, {
+                xtype: 'textfield',
+                name: 'script-torrent-done-filename',
+                fieldLabel: _('Script'),
+                allowBlank: true,
+                value: '',
+                plugins: [{
+                    ptype: 'fieldinfo',
+                    text: _('Enter path to script.')
+                }]
+            }]
+        }];
     }
+});
+
+Ext.apply(Ext.form.VTypes, {
+
+    transmissionbturl: function(v) {
+        return (/^[a-z0-9]+$/i).test(v);
+    },
+    transmissionbturiText: _('Invalid path.'),
+    transmissionbturiMask: /[a-z0-9\-_]/i
+
 });
 
 OMV.WorkspaceManager.registerPanel({

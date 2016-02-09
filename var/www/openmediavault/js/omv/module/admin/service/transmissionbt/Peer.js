@@ -19,7 +19,7 @@
 // require("js/omv/WorkspaceManager.js")
 // require("js/omv/workspace/form/Panel.js")
 
-Ext.define('OMV.module.admin.service.transmissionbt.settings.Peer', {
+Ext.define('OMV.module.admin.service.transmissionbt.Peer', {
     extend: 'OMV.workspace.form.Panel',
 
     rpcService: 'TransmissionBt',
@@ -167,4 +167,12 @@ Ext.define('OMV.module.admin.service.transmissionbt.settings.Peer', {
             }]
         }];
     }
+});
+
+OMV.WorkspaceManager.registerPanel({
+    id: 'peer',
+    path: '/service/transmissionbt',
+    text: _('Peer'),
+    position: 30,
+    className: 'OMV.module.admin.service.transmissionbt.Peer'
 });

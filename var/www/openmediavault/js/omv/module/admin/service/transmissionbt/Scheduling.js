@@ -19,7 +19,7 @@
 // require("js/omv/WorkspaceManager.js")
 // require("js/omv/workspace/form/Panel.js")
 
-Ext.define('OMV.module.admin.service.transmissionbt.settings.Scheduling', {
+Ext.define('OMV.module.admin.service.transmissionbt.Scheduling', {
     extend: 'OMV.workspace.form.Panel',
 
     rpcService: 'TransmissionBt',
@@ -195,4 +195,12 @@ Ext.define('OMV.module.admin.service.transmissionbt.settings.Scheduling', {
             }]
         }];
     }
+});
+
+OMV.WorkspaceManager.registerPanel({
+    id: 'scheduling',
+    path: '/service/transmissionbt',
+    text: _('Scheduling'),
+    position: 60,
+    className: 'OMV.module.admin.service.transmissionbt.Scheduling'
 });

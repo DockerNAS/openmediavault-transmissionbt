@@ -21,7 +21,7 @@
 // require("js/omv/form/field/SharedFolderComboBox.js")
 // require("js/omv/form/plugin/LinkedFields.js")
 
-Ext.define('OMV.module.admin.service.transmissionbt.settings.FilesAndLocations', {
+Ext.define('OMV.module.admin.service.transmissionbt.FilesAndLocations', {
     extend: 'OMV.workspace.form.Panel',
     requires: [
         'OMV.form.field.SharedFolderComboBox'
@@ -209,4 +209,12 @@ Ext.define('OMV.module.admin.service.transmissionbt.settings.FilesAndLocations',
             }]
         }];
     }
+});
+
+OMV.WorkspaceManager.registerPanel({
+    id: 'filesandlocations',
+    path: '/service/transmissionbt',
+    text: _('Files and locations'),
+    position: 20,
+    className: 'OMV.module.admin.service.transmissionbt.FilesAndLocations'
 });

@@ -19,7 +19,7 @@
 // require("js/omv/WorkspaceManager.js")
 // require("js/omv/workspace/form/Panel.js")
 
-Ext.define('OMV.module.admin.service.transmissionbt.settings.Bandwidth', {
+Ext.define('OMV.module.admin.service.transmissionbt.Bandwidth', {
     extend: 'OMV.workspace.form.Panel',
 
     rpcService: 'TransmissionBt',
@@ -117,4 +117,12 @@ Ext.define('OMV.module.admin.service.transmissionbt.settings.Bandwidth', {
             }]
         }];
     }
+});
+
+OMV.WorkspaceManager.registerPanel({
+    id: 'bandwidth',
+    path: '/service/transmissionbt',
+    text: _('Bandwidth'),
+    position: 40,
+    className: 'OMV.module.admin.service.transmissionbt.Bandwidth'
 });
