@@ -98,17 +98,17 @@ generate_config()
         -v "concat('\"watch-dir-enabled\": ', modules/filesandlocations/watch-dir-enabled, ',')" -n \
         -o "\"watch-dir\": \"${watch_shared_folder_path}/" -v "modules/filesandlocations/watch-dir" -o "\"," -n \
         \
-        -v "concat('\"bind-address-ipv4\": \"', modules/peers/bind-address-ipv4, '\",')" -n \
-        -v "concat('\"bind-address-ipv6\": \"', modules/peers/bind-address-ipv6, '\",')" -n \
-        -v "concat('\"peer-limit-global\": ', modules/peers/peer-limit-global, ',')" -n \
-        -v "concat('\"peer-limit-per-torrent\": ', modules/peers/peer-limit-per-torrent, ',')" -n \
-        -v "concat('\"peer-socket-tos\": \"', modules/peers/peer-socket-tos, '\",')" -n \
+        -v "concat('\"bind-address-ipv4\": \"', modules/peer/bind-address-ipv4, '\",')" -n \
+        -v "concat('\"bind-address-ipv6\": \"', modules/peer/bind-address-ipv6, '\",')" -n \
+        -v "concat('\"peer-limit-global\": ', modules/peer/peer-limit-global, ',')" -n \
+        -v "concat('\"peer-limit-per-torrent\": ', modules/peer/peer-limit-per-torrent, ',')" -n \
+        -v "concat('\"peer-socket-tos\": \"', modules/peer/peer-socket-tos, '\",')" -n \
         \
         -v "concat('\"peer-port\": ', modules/peer/peer-port, ',')" -n \
-        -v "concat('\"peer-port-random-high\": ', modules/peer-port/peer-port-random-high, ',')" -n \
-        -v "concat('\"peer-port-random-low\": ', modules/peer-port/peer-port-random-low, ',')" -n \
-        -v "concat('\"port-forwarding-enabled\": ', modules/peer-port/port-forwarding-enabled, ',')" -n \
-        -v "concat('\"peer-port-random-on-start\": ', modules/peer-port/peer-port-random-on-start, ',')" -n \
+        -v "concat('\"peer-port-random-high\": ', modules/peer/peer-port-random-high, ',')" -n \
+        -v "concat('\"peer-port-random-low\": ', modules/peer/peer-port-random-low, ',')" -n \
+        -v "concat('\"port-forwarding-enabled\": ', modules/peer/port-forwarding-enabled, ',')" -n \
+        -v "concat('\"peer-port-random-on-start\": ', modules/peer/peer-port-random-on-start, ',')" -n \
         \
         -v "concat('\"download-queue-enabled\": ', modules/queuing/download-queue-enabled, ',')" -n \
         -v "concat('\"download-queue-size\": ', modules/queuing/download-queue-size, ',')" -n \
