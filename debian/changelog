@@ -1,3 +1,9 @@
+openmediavault-transmissionbt (3.0.2) stable; urgency=medium
+
+  * Fix wrong XPath in mkconf script.
+
+ -- OpenMediaVault Plugin Developers <plugins@omv-extras.org>  Thu, 11 Feb 2016 21:07:14 +0100
+
 openmediavault-transmissionbt (3.0.1) stable; urgency=medium
 
   * Prevent possible RPC authentication leak.
