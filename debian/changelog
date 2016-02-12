@@ -1,3 +1,10 @@
+openmediavault-transmissionbt (3.0.3) stable; urgency=medium
+
+  * Wrap credentials in cronfile with single quotes to prevent bash from parsing
+    script symbols.
+
+ -- OpenMediaVault Plugin Developers <plugins@omv-extras.org>  Fri, 12 Feb 2016 17:41:56 +0100
+
 openmediavault-transmissionbt (3.0.2) stable; urgency=medium
 
   * Fix wrong XPath in mkconf script.
