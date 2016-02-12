@@ -171,7 +171,7 @@ generate_cron()
         -o "set -e" -n \
         -n \
         -i "rpc-authentication-required[. = '1']" \
-            -o "TR_AUTH=" -v rpc-username -o ":" -v rpc-password -o " " -b \
+            -o "TR_AUTH='" -v rpc-username -o ":" -v rpc-password -o "' " -b \
         -o "transmission-remote http://localhost:" -v rpc-port -o "/transmission/rpc" \
         -i "rpc-authentication-required[. = '1']" \
             -o " --authenv" -b \
