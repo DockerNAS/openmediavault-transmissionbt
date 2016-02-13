@@ -976,7 +976,9 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
                         "type": "boolean"
                     },
                     "rpc-password": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "regex",
+                        "pattern": "\/^[^\'\\"\\\\\\\]+$\/"
                     },
                     "rpc-port": {
                         "type": "integer",
@@ -984,7 +986,7 @@ class OMVRpcServiceTransmissionBt extends OMVRpcServiceAbstract
                         "maximum": 65535
                     },
                     "rpc-username": {
-                        "type": "string"
+                        '.$GLOBALS['OMV_JSONSCHEMA_USERNAME'].'
                     }
                 }
             }'

@@ -111,6 +111,8 @@ Ext.define('OMV.module.admin.service.transmissionbt.Rpc', {
                 name: 'rpc-password',
                 fieldLabel: _('Password'),
                 allowBlank: false,
+                regex: /^[^'"\\]+$/,
+                regexText: _('You\'ve used one of the following characters which is not allowed: \' " \\'),
                 plugins: [{
                     ptype: 'fieldinfo',
                     text: _('Used for client authentication.')
