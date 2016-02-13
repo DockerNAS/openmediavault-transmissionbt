@@ -54,6 +54,7 @@ Ext.define('OMV.module.admin.service.transmissionbt.Peer', {
                     xtype: 'textfield',
                     name: 'bind-address-ipv6',
                     fieldLabel: _('IPv6'),
+                    vtype: 'IPv6',
                     allowBlank: false,
                     value: '::',
                     plugins: [{

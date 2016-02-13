@@ -94,6 +94,7 @@ Ext.define('OMV.module.admin.service.transmissionbt.Blocklists', {
                 xtype: 'textfield',
                 name: 'blocklist-url',
                 fieldLabel: _('URL'),
+                vtype: 'url',
                 allowBlank: true,
                 width: 300,
                 value: 'http://www.example.com/blocklist',
