@@ -30,17 +30,15 @@ OMVLogFile::registerType(
         'columns' => [
             'ts' => [
                 'index' => 1,
-                'func' => create_function(
-                    '$v',
-                    'return strpdate($v, \'M j G:i:s\');'
-                ),
+                'func' => function ($date) {
+                    return strpdate($date, 'M j G:i:s');
+                },
             ],
             'date' => [
                 'index' => 1,
-                'func' => create_function(
-                    '$v',
-                    'return strftime(\'%c\', strpdate($v, \'M j G:i:s\'));'
-                ),
+                'func' => function ($date) {
+                    return strftime('%c', strpdate($date, 'M j G:i:s'));
+                },
             ],
             'event' => 3,
         ],
