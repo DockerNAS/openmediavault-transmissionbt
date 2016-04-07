@@ -18,40 +18,42 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-require_once 'openmediavault/config.inc';
-require_once 'openmediavault/error.inc';
-require_once 'openmediavault/module.inc';
-require_once 'openmediavault/notify.inc';
-require_once 'openmediavault/systemctl.inc';
 
-class OMVModuleTransmissionBt extends OMVModuleServiceAbstract implements
-    OMVIModuleServiceStatus,
-    OMVIModuleZeroconf,
-    OMVINotifyListener
+namespace OMV\Engined\Module;
+
+use OMV\Config\Database;
+use OMV\Engine\Module\IServiceStatus;
+use OMV\Engine\Module\IZeroconf;
+use OMV\Engine\Module\Manager as ModuleManager;
+use OMV\Engine\Module\ServiceAbstract;
+use OMV\Engine\Notify\Dispatcher;
+use OMV\Engine\Notify\IListener;
+use OMV\System\Process;
+use OMV\System\SystemCtl;
+
+class TransmissionBt extends ServiceAbstract implements
+    IListener,
+    IServiceStatus,
+    IZeroconf
 {
-    /**
-     * The main event message path.
-     *
-     * @var string
-     */
+    /** @var Database */
+    private $database;
+
+    /** @var string */
+    private $dataModelPath = 'conf.service.transmissionbt';
+
+    /** @var string */
     private $eventMessagePath = 'org.openmediavault.services.transmissionbt';
 
-    /**
-    * The shared folder event message path.
-     * @var string
-     */
+    /** @var string */
     private $sharedFolderEventMessagePath = 'org.openmediavault.system.shares.sharedfolder';
 
-    /**
-     * The name of the service unit.
-     *
-     * @var string
-     */
+    /** @var string */
     private $serviceName = 'transmission-daemon';
 
-    private function getXpath()
+    public function __construct(Database $database = null)
     {
-        return '/config/services/transmissionbt';
+        $this->database = $database ?: Database::getInstance();
     }
 
     /**
@@ -65,51 +67,19 @@ class OMVModuleTransmissionBt extends OMVModuleServiceAbstract implements
     }
 
     /**
-     * Generate the configuration.
-     *
-     * @return void
-     *
-     * @throws OMVException
-     */
-    public function applyConfig()
-    {
-        $cmd = sprintf('export LANG=C; omv-mkconf %s 2>&1', $this->getName());
-
-        if (0 !== $this->exec($cmd, $output)) {
-            throw new OMVException(
-                OMVErrorMsg::E_EXEC_FAILED,
-                $cmd,
-                implode(PHP_EOL, $output)
-            );
-        }
-    }
-
-    /**
-     * Get the status of the managed service.
+     * Get the module status.
      *
      * @return array
-     *
-     * @throws OMVException
      */
     public function getStatus()
     {
-        global $xmlConfig;
-
-        $object = $xmlConfig->get($this->getXpath());
-
-        if (is_null($object)) {
-            throw new OMVException(
-                OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
-                $this->getXpath()
-            );
-        }
-
-        $systemCtl = new OMVSystemCtl($this->serviceName);
+        $object = $this->database->get($this->dataModelPath);
+        $systemCtl = new SystemCtl($this->serviceName);
 
         return [
             'name' => $this->getName(),
             'title' => gettext('BitTorrent'),
-            'enabled' => boolval($object['enable']),
+            'enabled' => $object->get('enable'),
             'running' => $systemCtl->isActive(),
         ];
     }
@@ -128,31 +98,30 @@ class OMVModuleTransmissionBt extends OMVModuleServiceAbstract implements
     }
 
     /**
+     * Generate the configuration.
+     *
+     * @return void
+     */
+    public function applyConfig()
+    {
+        $cmd = new Process('omv-mkconf', $this->getName());
+        $cmd->setRedirect2to1();
+        $cmd->execute();
+    }
+
+    /**
      * Start the managed service.
      *
      * @return void
-     *
-     * @throws OMVException
      */
     public function startService()
     {
-        global $xmlConfig;
+        $object = $this->database->get($this->dataModelPath);
 
-        $object = $xmlConfig->get($this->getXpath());
-
-        if (is_null($object)) {
-            throw new OMVException(
-                OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
-                $this->getXpath()
-            );
+        if ($object->get('enable')) {
+            $systemCtl = new SystemCtl($this->serviceName);
+            $systemCtl->enable(true);
         }
-
-        if (!boolval($object['enable'])) {
-            return;
-        }
-
-        $systemCtl = new OMVSystemCtl($this->serviceName);
-        $systemCtl->enable(true);
     }
 
     /**
@@ -162,19 +131,20 @@ class OMVModuleTransmissionBt extends OMVModuleServiceAbstract implements
      */
     public function stopService()
     {
-        $systemCtl = new OMVSystemCtl($this->serviceName);
+        $systemCtl = new SystemCtl($this->serviceName);
         $systemCtl->disable(true);
     }
 
     /**
      * Bind listeners.
      *
-     * @param OMVNotifyDispatcher $dispatcher The dispatcher object.
+     * @param Dispatcher $dispatcher The dispatcher object.
+     *
      * @return void
      */
-    public function bindListeners(OMVNotifyDispatcher $dispatcher)
+    public function bindListeners(Dispatcher $dispatcher)
     {
-        $moduleMgr = &OMVModuleMgr::getInstance();
+        $moduleManager = ModuleManager::getInstance();
 
         $dispatcher->addListener(
             OMV_NOTIFY_MODIFY,
@@ -185,7 +155,7 @@ class OMVModuleTransmissionBt extends OMVModuleServiceAbstract implements
         $dispatcher->addListener(
             OMV_NOTIFY_MODIFY,
             $this->eventMessagePath,
-            [$moduleMgr->getModule('zeroconf'), 'setDirty']
+            [$moduleManager->getModule('zeroconf'), 'setDirty']
         );
 
         $dispatcher->addListener(
@@ -195,7 +165,3 @@ class OMVModuleTransmissionBt extends OMVModuleServiceAbstract implements
         );
     }
 }
-
-// Register module.
-$moduleMgr = &OMVModuleMgr::getInstance();
-$moduleMgr->registerModule(new OMVModuleTransmissionBt());

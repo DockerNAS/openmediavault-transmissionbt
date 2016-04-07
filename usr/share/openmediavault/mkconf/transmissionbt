@@ -31,7 +31,7 @@ OMV_TRANSMISSIONBT_XPATH="/config/services/transmissionbt"
 
 get_shared_folder_path()
 {
-    local ref=$(omv_config_get "${OMV_TRANSMISSIONBT_XPATH}/modules/filesandlocations/${1}.sharedfolderref")
+    local ref=$(omv_config_get "${OMV_TRANSMISSIONBT_XPATH}/modules/filesandlocations/${1}-sharedfolderref")
 
     echo "$(omv_get_sharedfolder_path ${ref})"
 }

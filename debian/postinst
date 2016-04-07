@@ -70,9 +70,9 @@ case "$1" in
 
         if ! omv_config_exists "${SERVICE_XPATH}/modules/filesandlocations"; then
             omv_config_add_element "${SERVICE_XPATH}/modules" "filesandlocations"
-            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "download.sharedfolderref"
+            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "download-sharedfolderref"
             omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "download-dir"
-            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "incomplete.sharedfolderref"
+            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "incomplete-sharedfolderref"
             omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "incomplete-dir" "incomplete"
             omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "incomplete-dir-enabled" "0"
             omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "preallocation" "1"
@@ -80,7 +80,7 @@ case "$1" in
             omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "start-added-torrents" "1"
             omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "trash-original-torrent-files" "0"
             omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "umask" "18"
-            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "watch.sharedfolderref"
+            omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "watch-sharedfolderref"
             omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "watch-dir" "watch"
             omv_config_add_element "${SERVICE_XPATH}/modules/filesandlocations" "watch-dir-enabled" "0"
         fi
@@ -141,6 +141,13 @@ case "$1" in
             zeroconf="${zeroconf}<name>%h - BitTorrent</name>"
 
             omv_config_add_element "${ZEROCONF_XPATH}" "service" "${zeroconf}" true
+        fi
+
+        # Migrations.
+        if dpkg --compare-versions "$2" lt-nl "3.0.5"; then
+            omv_config_rename "${SERVICE_XPATH}/modules/filesandlocations/download.sharedfolderref" "download-sharedfolderref"
+            omv_config_rename "${SERVICE_XPATH}/modules/filesandlocations/incomplete.sharedfolderref" "incomplete-sharedfolderref"
+            omv_config_rename "${SERVICE_XPATH}/modules/filesandlocations/watch.sharedfolderref" "watch-sharedfolderref"
         fi
 
         # Activate package triggers. These triggers are only set during the
