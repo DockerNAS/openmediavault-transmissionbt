@@ -59,7 +59,7 @@ class TransmissionBt extends ServiceAbstract
     private $dispatcher;
 
     /** @var string */
-    private $eventMessagePath = 'org.openmediavault.services.transmissionbt';
+    private $eventMessagePath = 'org.openmediavault.conf.service.transmissionbt';
 
     public function __construct(Database $database = null, Dispatcher $dispatcher = null)
     {

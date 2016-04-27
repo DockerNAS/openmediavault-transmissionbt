@@ -43,10 +43,10 @@ class TransmissionBt extends ServiceAbstract implements
     private $dataModelPath = 'conf.service.transmissionbt';
 
     /** @var string */
-    private $eventMessagePath = 'org.openmediavault.services.transmissionbt';
+    private $eventMessagePath = 'org.openmediavault.conf.service.transmissionbt';
 
     /** @var string */
-    private $sharedFolderEventMessagePath = 'org.openmediavault.system.shares.sharedfolder';
+    private $sharedFolderEventMessagePath = 'org.openmediavault.conf.system.sharedfolder';
 
     /** @var string */
     private $serviceName = 'transmission-daemon';
