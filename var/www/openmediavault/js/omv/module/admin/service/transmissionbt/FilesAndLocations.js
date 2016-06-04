@@ -20,6 +20,7 @@
 // require("js/omv/workspace/form/Panel.js")
 // require("js/omv/form/field/SharedFolderComboBox.js")
 // require("js/omv/form/plugin/LinkedFields.js")
+// require("js/omvextras/form/field/plugin/PermissionsInfo.js")
 
 Ext.define('OMV.module.admin.service.transmissionbt.FilesAndLocations', {
     extend: 'OMV.workspace.form.Panel',
@@ -81,7 +82,14 @@ Ext.define('OMV.module.admin.service.transmissionbt.FilesAndLocations', {
                     fieldLabel: _('Shared folder'),
                     plugins: [{
                         ptype: 'fieldinfo',
-                        text: _('Make sure the group \'debian-transmission\' has read/write access to the shared folder.')
+                        text: _('Make sure the user \'debian-transmission\' has read and write access to the shared folder.')
+                    }, {
+                        ptype: 'permissionsinfo',
+                        username: 'debian-transmission',
+                        execute: true,
+                        read: true,
+                        write: true
+
                     }]
                 }, {
                     xtype: 'textfield',
@@ -112,7 +120,14 @@ Ext.define('OMV.module.admin.service.transmissionbt.FilesAndLocations', {
                     allowBlank: true,
                     plugins: [{
                         ptype: 'fieldinfo',
-                        text: _('Make sure the group \'debian-transmission\' has read/write access to the shared folder.')
+                        text: _('Make sure the user \'debian-transmission\' has read and write access to the shared folder.')
+                    }, {
+                        ptype: 'permissionsinfo',
+                        username: 'debian-transmission',
+                        execute: true,
+                        read: true,
+                        write: true
+
                     }]
                 }, {
                     xtype: 'textfield',
@@ -143,7 +158,13 @@ Ext.define('OMV.module.admin.service.transmissionbt.FilesAndLocations', {
                     allowBlank: true,
                     plugins: [{
                         ptype: 'fieldinfo',
-                        text: _('Make sure the group \'debian-transmission\' has read/write access to the shared folder.')
+                        text: _('Make sure the user \'debian-transmission\' has read and write access to the shared folder.')
+                    }, {
+                        ptype: 'permissionsinfo',
+                        username: 'debian-transmission',
+                        execute: true,
+                        read: true,
+                        write: true
                     }]
                 }, {
                     xtype: 'textfield',
