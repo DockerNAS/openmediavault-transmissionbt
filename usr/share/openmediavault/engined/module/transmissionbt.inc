@@ -152,6 +152,14 @@ class TransmissionBt extends ServiceAbstract implements
             [$this, 'setDirty']
         );
 
+        foreach (['bandwidth', 'blocklists', 'filesandlocations', 'peer', 'queuing', 'rpc', 'scheduling'] as $subPath) {
+            $dispatcher->addListener(
+                OMV_NOTIFY_MODIFY,
+                implode('.', [$this->eventMessagePath, $subPath]),
+                [$this, 'setDirty']
+            );
+        }
+
         $dispatcher->addListener(
             OMV_NOTIFY_MODIFY,
             $this->eventMessagePath,

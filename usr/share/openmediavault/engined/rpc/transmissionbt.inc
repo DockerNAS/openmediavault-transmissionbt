@@ -22,7 +22,6 @@
 namespace OMV\Engined\Rpc;
 
 use OMV\Config\Database;
-use OMV\Engine\Notify\Dispatcher;
 use OMV\Exception;
 use OMV\Rpc\ServiceAbstract;
 
@@ -55,16 +54,12 @@ class TransmissionBt extends ServiceAbstract
     /** @var string */
     private $schedulingDataModelPath = 'conf.service.transmissionbt.scheduling';
 
-    /** @var Dispatcher */
-    private $dispatcher;
-
     /** @var string */
     private $eventMessagePath = 'org.openmediavault.conf.service.transmissionbt';
 
-    public function __construct(Database $database = null, Dispatcher $dispatcher = null)
+    public function __construct(Database $database = null)
     {
         $this->database = $database ?: Database::getInstance();
-        $this->dispatcher = $dispatcher ?: Dispatcher::getInstance();
     }
 
     /**
@@ -146,7 +141,6 @@ class TransmissionBt extends ServiceAbstract
         }
 
         $this->database->set($object);
-        $this->dispatcher->notify(OMV_NOTIFY_MODIFY, $this->eventMessagePath, $object);
 
         $object->remove('modules');
 
@@ -187,7 +181,6 @@ class TransmissionBt extends ServiceAbstract
         $object->setAssoc($params);
 
         $this->database->set($object);
-        $this->dispatcher->notify(OMV_NOTIFY_MODIFY, $this->eventMessagePath);
 
         return $object->getAssoc();
     }
@@ -226,7 +219,6 @@ class TransmissionBt extends ServiceAbstract
         $object->setAssoc($params);
 
         $this->database->set($object);
-        $this->dispatcher->notify(OMV_NOTIFY_MODIFY, $this->eventMessagePath);
 
         return $object->getAssoc();
     }
@@ -265,7 +257,6 @@ class TransmissionBt extends ServiceAbstract
         $object->setAssoc($params);
 
         $this->database->set($object);
-        $this->dispatcher->notify(OMV_NOTIFY_MODIFY, $this->eventMessagePath);
 
         return $object->getAssoc();
     }
@@ -304,7 +295,6 @@ class TransmissionBt extends ServiceAbstract
         $object->setAssoc($params);
 
         $this->database->set($object);
-        $this->dispatcher->notify(OMV_NOTIFY_MODIFY, $this->eventMessagePath);
 
         return $object->getAssoc();
     }
@@ -343,7 +333,6 @@ class TransmissionBt extends ServiceAbstract
         $object->setAssoc($params);
 
         $this->database->set($object);
-        $this->dispatcher->notify(OMV_NOTIFY_MODIFY, $this->eventMessagePath);
 
         return $object->getAssoc();
     }
@@ -382,7 +371,6 @@ class TransmissionBt extends ServiceAbstract
         $object->setAssoc($params);
 
         $this->database->set($object);
-        $this->dispatcher->notify(OMV_NOTIFY_MODIFY, $this->eventMessagePath);
 
         return $object->getAssoc();
     }
@@ -504,7 +492,6 @@ class TransmissionBt extends ServiceAbstract
         $object->setAssoc($params);
 
         $this->database->set($object);
-        $this->dispatcher->notify(OMV_NOTIFY_MODIFY, $this->eventMessagePath);
 
         // Avoid having to remove and set all options manually again.
         return $this->callMethod('getSchedulingSettings', [], $context);
