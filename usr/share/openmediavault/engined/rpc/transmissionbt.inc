@@ -54,9 +54,6 @@ class TransmissionBt extends ServiceAbstract
     /** @var string */
     private $schedulingDataModelPath = 'conf.service.transmissionbt.scheduling';
 
-    /** @var string */
-    private $eventMessagePath = 'org.openmediavault.conf.service.transmissionbt';
-
     public function __construct(Database $database = null)
     {
         $this->database = $database ?: Database::getInstance();
