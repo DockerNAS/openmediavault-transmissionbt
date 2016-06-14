@@ -397,9 +397,9 @@ class TransmissionBt extends ServiceAbstract
         $object->add('end-minute', 'integer');
 
         // Set the time options.
-        $object->set('begin-hour', $altSpeedTimeBegin / 60);
+        $object->set('begin-hour', floor($altSpeedTimeBegin / 60));
         $object->set('begin-minute', $altSpeedTimeBegin % 60);
-        $object->set('end-hour', $altSpeedTimeEnd / 60);
+        $object->set('end-hour', floor($altSpeedTimeEnd / 60));
         $object->set('end-minute', $altSpeedTimeEnd % 60);
 
         // Add the days options.
